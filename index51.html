@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>T9 Stacking Calculator</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --accent: #1e40af;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --group-g9: #2563eb;
+      --group-s9: #7c3aed;
+      --group-g8: #db2777;
+      --group-s8: #059669;
+      --group-m9: #dc2626;
+      --group-m8: #d97706;
+      --group-m7: #0891b2;
+      --group-e9: #65a30d;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1000px;
+      width: 100%;
+    }
+
+    header {
+      margin-bottom: 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .top-controls {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .lang-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .lang-icon {
+      width: 20px;
+      height: 20px;
+      fill: var(--text-muted);
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .custom-lang-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .lang-btn {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    .lang-btn:hover {
+      border-color: var(--accent);
+    }
+
+    .flag-icon {
+      width: 20px;
+      height: 15px;
+      object-fit: cover;
+      border-radius: 2px;
+      box-shadow: 0 0 1px rgba(0,0,0,0.3);
+    }
+
+    .arrow-down {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+    }
+
+    .lang-dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 108%;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      z-index: 100;
+      min-width: 130px;
+      overflow: hidden;
+    }
+
+    .lang-dropdown.show {
+      display: block;
+    }
+
+    .lang-option {
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      transition: background-color 0.15s;
+    }
+
+    .lang-option:hover {
+      background-color: #f1f5f9;
+    }
+
+    .info-btn {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 4px 10px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      transition: all 0.2s ease;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .info-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background-color: #f8fafc;
+    }
+
+    .info-icon {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    p.instruction {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-style: italic;
+      margin-top: 6px;
+    }
+
+    .controls-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .select-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      text-align: left;
+    }
+
+    select.custom-select {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      outline: none;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    select.custom-select:focus {
+      border-color: var(--accent);
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: var(--accent);
+    }
+
+    .checkbox-group label {
+      cursor: pointer;
+      margin: 0;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+
+    .input-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    label {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    input[type="text"] {
+      background: #f1f5f9;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      outline: none;
+      transition: border-color 0.2s, background-color 0.2s;
+    }
+
+    input[type="text"]:focus {
+      border-color: var(--accent);
+      background: #ffffff;
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat-label {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .stat-value {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1e3a8a;
+      font-family: "Courier New", Courier, monospace;
+    }
+
+    .main-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    @media (min-width: 800px) {
+      .main-layout {
+        grid-template-columns: 1fr 1.2fr;
+      }
+    }
+
+    .left-column {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      overflow-x: auto;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .card h2 {
+      font-size: 1.2rem;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    .section-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-header-line {
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 14px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    th {
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .badge-g9 { background-color: var(--group-g9); }
+    .badge-s9 { background-color: var(--group-s9); }
+    .badge-g8 { background-color: var(--group-g8); }
+    .badge-s8 { background-color: var(--group-s8); }
+    .badge-m9 { background-color: var(--group-m9); }
+    .badge-m8 { background-color: var(--group-m8); }
+    .badge-m7 { background-color: var(--group-m7); }
+    .badge-e9 { background-color: var(--group-e9); }
+
+    .num-val {
+      font-family: "Courier New", Courier, monospace;
+      font-weight: 700;
+      color: #1e3a8a;
+      text-align: right;
+    }
+
+    /* Modal Styling */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.4);
+      backdrop-filter: blur(2px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.show {
+      display: flex;
+    }
+
+    .modal-card {
+      background: #ffffff;
+      border-radius: 12px;
+      max-width: 550px;
+      width: 100%;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      animation: modalFadeIn 0.2s ease-out;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h3 {
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .close-btn:hover {
+      color: var(--text);
+    }
+
+    .modal-body {
+      padding: 20px;
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+
+    .modal-body ol {
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .modal-body li {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    .modal-body ul {
+      margin-top: 6px;
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      list-style-type: disc;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="top-controls">
+        <div class="lang-container">
+          <svg class="lang-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+          </svg>
+
+          <div class="custom-lang-wrapper">
+            <button class="lang-btn" id="langBtn" onclick="toggleDropdown()">
+              <img id="currentFlag" class="flag-icon" src="https://flagcdn.com/w40/gb.png" alt="GB Flag">
+              <span id="currentLangText">English</span>
+              <span class="arrow-down">▼</span>
+            </button>
+            <div class="lang-dropdown" id="langDropdown">
+              <div class="lang-option" onclick="selectLanguage('en', 'English', 'gb')">
+                <img class="flag-icon" src="https://flagcdn.com/w40/gb.png" alt="GB Flag"> English
+              </div>
+              <div class="lang-option" onclick="selectLanguage('fr', 'Français', 'fr')">
+                <img class="flag-icon" src="https://flagcdn.com/w40/fr.png" alt="FR Flag"> Français
+              </div>
+              <div class="lang-option" onclick="selectLanguage('it', 'Italiano', 'it')">
+                <img class="flag-icon" src="https://flagcdn.com/w40/it.png" alt="IT Flag"> Italiano
+              </div>
+              <div class="lang-option" onclick="selectLanguage('es', 'Español', 'es')">
+                <img class="flag-icon" src="https://flagcdn.com/w40/es.png" alt="ES Flag"> Español
+              </div>
+              <div class="lang-option" onclick="selectLanguage('de', 'Deutsch', 'de')">
+                <img class="flag-icon" src="https://flagcdn.com/w40/de.png" alt="DE Flag"> Deutsch
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="info-btn" onclick="openModal()" aria-label="Instructions">
+          <svg class="info-icon" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+          </svg>
+          <span id="txtBtnInstructions">Instructions</span>
+        </button>
+      </div>
+
+      <h1 id="txtTitle">T9 Stacking Calculator</h1>
+      <p class="subtitle" id="txtSubtitle">Calculates all troop types, monsters, and mercenaries based on input value</p>
+      <p class="instruction" id="txtInstruction">Change the number of the 'base value' until you match your total Leadership and Dominance</p>
+
+      <div class="controls-wrapper">
+        <div class="select-group">
+          <label for="deviceModeSelect" id="txtDeviceLabel">Device Layout</label>
+          <select id="deviceModeSelect" class="custom-select" onchange="calculate()">
+            <option value="phone" id="optPhone" selected>Phone</option>
+            <option value="pc" id="optPc">PC</option>
+          </select>
+        </div>
+
+        <div class="select-group">
+          <label for="stackingModeSelect" id="txtStackingLabel">Stacking Mode</label>
+          <select id="stackingModeSelect" class="custom-select" onchange="calculate()">
+            <option value="0.005" id="optConservative">Conservative</option>
+            <option value="0.0035" id="optModerate">Moderate</option>
+            <option value="0.002" id="optAggressive">Aggressive</option>
+          </select>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="includeJosephineCheckbox" onchange="calculate()">
+          <label for="includeJosephineCheckbox" id="txtJosephineLabel">Include Josephine II</label>
+        </div>
+      </div>
+    </header>
+
+    <div class="input-card">
+      <div class="input-group">
+        <label for="baseInput" id="txtBaseLabel">Base Value (Ranged Units G9)</label>
+        <input 
+          type="text" 
+          inputmode="numeric" 
+          id="baseInput" 
+          value="11500" 
+          placeholder="Enter Base Value..." 
+          onbeforeinput="handleBeforeInput(event)"
+          oninput="handleInput(event)"
+          onpaste="handlePaste(event)"
+        >
+      </div>
+      <div class="stat-row">
+        <span class="stat-label" id="txtLeadershipLabel">Total Leadership Required</span>
+        <span class="stat-value" id="totalLeadership">0</span>
+      </div>
+    </div>
+
+    <div class="input-card">
+      <div class="input-group">
+        <label for="monsterBaseInput" id="txtMonsterBaseLabel">Monster Base Number (Dragons M9)</label>
+        <input 
+          type="text" 
+          inputmode="numeric" 
+          id="monsterBaseInput" 
+          value="50" 
+          placeholder="Enter Monster Base Value..." 
+          onbeforeinput="handleBeforeInput(event)"
+          oninput="handleInput(event)"
+          onpaste="handlePaste(event)"
+        >
+      </div>
+      <div class="stat-row">
+        <span class="stat-label" id="txtDominanceLabel">Total Dominance Required</span>
+        <span class="stat-value" id="totalDominance">0</span>
+      </div>
+    </div>
+
+    <div class="main-layout">
+      <div class="left-column">
+        <div class="card">
+          <h2 id="txtMercenariesTitle">Mercenaries</h2>
+          <p class="section-note" id="txtMercenariesNote">Max number of mercenaries, adjust per availability</p>
+          <table>
+            <thead>
+              <tr>
+                <th id="txtColMercUnit">Unit Name</th>
+                <th style="text-align: right;" id="txtColMercCount">Count</th>
+              </tr>
+            </thead>
+            <tbody id="mercenariesTable"></tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <h2 id="txtMonstersTitle">Monsters</h2>
+          <table>
+            <thead>
+              <tr>
+                <th id="txtColMonsterTier">Tier</th>
+                <th id="txtColMonsterUnit">Unit Name</th>
+                <th style="text-align: right;" id="txtColMonsterCount">Count</th>
+              </tr>
+            </thead>
+            <tbody id="monstersTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="right-column">
+        <div class="card">
+          <h2 class="card-header-line" id="txtTroopsTitle">Troops</h2>
+          <table>
+            <thead>
+              <tr>
+                <th id="txtColTroopGroup">Group</th>
+                <th id="txtColTroopType">Troop Type</th>
+                <th style="text-align: right;" id="txtColTroopCount">Count</th>
+              </tr>
+            </thead>
+            <tbody id="troopsTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Instruction Popup Modal -->
+  <div class="modal-overlay" id="helpModal" onclick="closeModalOnOverlay(event)">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="txtModalTitle">Instructions</h3>
+        <button class="close-btn" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <ol>
+          <li id="txtStep1">Find your leadership</li>
+          <li id="txtStep2">
+            <span id="txtStep2Title">Select the device layout you are using (PC or Phone)</span><br>
+            <small style="color: var(--text-muted);" id="txtStep2Sub">Each device has a different order showing the troops. This option helps to match that order, making easier entering the correct numbers.</small>
+          </li>
+          <li id="txtStep3">
+            <span id="txtStep3Title">Select the stacking mode</span>
+            <ul>
+              <li id="txtStep3a"><strong>Conservative</strong> - guarantees the correct order of attack</li>
+              <li id="txtStep3b"><strong>Aggressive</strong> - allows to carry more troops with the same leadership but even a minor problem with the health bonus (missing research, wrong gem or artifact) can mess up the order of attack</li>
+              <li id="txtStep3c"><strong>Moderate</strong> is the middle ground</li>
+            </ul>
+            <small style="color: var(--text-muted);" id="txtStep3Sub">Experiment and see what works for you</small>
+          </li>
+          <li id="txtStep4">Adjust the 'base number' until the total leadership in the calculator matches your leadership.</li>
+          <li id="txtStep5">Have fun 😊</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentLang = 'en';
+
+    const translations = {
+      en: {
+        modalTitle: "Instructions",
+        step1: "Find your leadership",
+        step2Title: "Select the device layout you are using (PC or Phone)",
+        step2Sub: "Each device has a different order showing the troops. This option helps to match that order, making easier entering the correct numbers.",
+        step3Title: "Select the stacking mode",
+        step3a: "<strong>Conservative</strong> - guarantees the correct order of attack",
+        step3b: "<strong>Aggressive</strong> - allows to carry more troops with the same leadership but even a minor problem with the health bonus (missing research, wrong gem or artifact) can mess up the order of attack",
+        step3c: "<strong>Moderate</strong> is the middle ground",
+        step3Sub: "Experiment and see what works for you",
+        step4: "Adjust the 'base number' until the total leadership in the calculator matches your leadership.",
+        step5: "Have fun 😊",
+        title: "T9 Stacking Calculator",
+        subtitle: "Calculates all troop types, monsters, and mercenaries based on input value",
+        instruction: "Change the number of the 'base value' until you match your total Leadership and Dominance",
+        deviceLabel: "Device Layout",
+        optPhone: "Phone",
+        optPc: "PC",
+        stackingLabel: "Stacking Mode",
+        optConservative: "Conservative",
+        optModerate: "Moderate",
+        optAggressive: "Aggressive",
+        baseLabel: "Base Value (Ranged Units G9)",
+        leadershipLabel: "Total Leadership Required",
+        monsterBaseLabel: "Monster Base Number (Dragons M9)",
+        dominanceLabel: "Total Dominance Required",
+        josephineLabel: "Include Josephine II",
+        josephineName: "JOSEPHINE II",
+        mercenariesTitle: "Mercenaries",
+        mercenariesNote: "Max number of mercenaries, adjust per availability",
+        monstersTitle: "Monsters",
+        troopsTitle: "Troops",
+        colUnitName: "Unit Name",
+        colCount: "Count",
+        colGroup: "Tier",
+        colTroopType: "Troop Type",
+        troops: [
+          "CORAX II", "ROYAL LION II", "CORAX I", "ROYAL LION I",
+          "SMITER II", "WHITEMANE II", "SMITER I", "WHITEMANE I",
+          "PURIFIER II", "PUNISHER II", "LEGITIMIST II", "DUELIST II",
+          "PURIFIER I", "PUNISHER I", "LEGITIMIST I", "DUELIST I"
+        ],
+        monsters: ["M9", "M8", "M7"],
+        monsterCascade: [
+          "M9 DEVASTATOR II", "M9 KRAKEN II", "M9 TRICKSTER II", "M8 DEVASTATOR I",
+          "M9 PHOENIX II", "M8 KRAKEN I", "M8 TRICKSTER I", "M7 WIND LORD",
+          "M7 COLOSSUS", "M7 TERROR", "M7 BLACK DRAGON", "M8 PHOENIX I"
+        ],
+        mercenaries: [
+          "WYVERN", "WARDEN", "SALAMANDER", "WARREGAL/JAGO", "CANNONEER",
+          "ARIEL", "EPIC HUNTER", "RIDERS", "TROOPS"
+        ]
+      },
+      fr: {
+        modalTitle: "Instructions",
+        step1: "Trouvez votre commandement",
+        step2Title: "Sélectionnez la disposition de l'appareil utilisé (PC ou Téléphone)",
+        step2Sub: "Chaque appareil a un ordre d'affichage différent pour les troupes. Cette option permet de faire correspondre cet ordre, facilitant la saisie des bons chiffres.",
+        step3Title: "Sélectionnez le mode d'empilement",
+        step3a: "<strong>Conservateur</strong> - garantit l'ordre d'attaque correct",
+        step3b: "<strong>Agressif</strong> - permet de transporter plus de troupes avec le même commandement, mais le moindre problème de bonus de santé (recherche manquante, mauvaise gemme ou artefact) peut perturber l'ordre d'attaque",
+        step3c: "<strong>Modéré</strong> est le juste milieu",
+        step3Sub: "Expérimentez et voyez ce qui fonctionne pour vous",
+        step4: "Ajustez le 'nombre de base' jusqu'à ce que le commandement total dans le calculateur corresponde à votre commandement.",
+        step5: "Amusez-vous bien 😊",
+        title: "Calculateur d'Empilement T9",
+        subtitle: "Calcule tous les types de troupes, monstres et mercenaires en fonction de la valeur saisie",
+        instruction: "Modifiez la 'valeur de base' jusqu'à ce qu'elle corresponde à votre Commandement Total et votre Dominance",
+        deviceLabel: "Disposition de l'Appareil",
+        optPhone: "Téléphone",
+        optPc: "PC",
+        stackingLabel: "Mode d'Empilement",
+        optConservative: "Conservateur",
+        optModerate: "Modéré",
+        optAggressive: "Agressif",
+        baseLabel: "Valeur de Base (Unités à Distance G9)",
+        leadershipLabel: "Commandement Total Requis",
+        monsterBaseLabel: "Nombre de Base des Monstres (Dragons M9)",
+        dominanceLabel: "Dominance Totale Requise",
+        josephineLabel: "Inclure Joséphine II",
+        josephineName: "JOSÉPHINE II",
+        mercenariesTitle: "Mercenaires",
+        mercenariesNote: "Nombre maximal de mercenaires, ajustez selon la disponibilité",
+        monstersTitle: "Monstres",
+        troopsTitle: "Troupes",
+        colUnitName: "Nom de l'Unité",
+        colCount: "Quantité",
+        colGroup: "Palier",
+        colTroopType: "Type de Troupe",
+        troops: [
+          "CORAX II", "LION ROYAL II", "CORAX I", "LION ROYAL I",
+          "CHÂTIEUR II", "CRINIÈRE BLANCHE II", "CHÂTIEUR I", "CRINIÈRE BLANCHE I",
+          "PURIFICATEUR II", "PUNISSEUR II", "LÉGITIMISTE II", "DUELISTE II",
+          "PURIFICATEUR I", "PUNISSEUR I", "LÉGITIMISTE I", "DUELISTE I"
+        ],
+        monsters: ["M9", "M8", "M7"],
+        monsterCascade: [
+          "M9 DÉVASTATEUR II", "M9 KRAKEN II", "M9 FILOU II", "M8 DÉVASTATEUR I",
+          "M9 PHÉNIX II", "M8 KRAKEN I", "M8 FILOU I", "M7 SEIGNEUR DU VENT",
+          "M7 COLOSSE", "M7 TERREUR", "M7 DRAGON NOIR", "M8 PHÉNIX I"
+        ],
+        mercenaries: [
+          "VOUIVRE", "GARDIEN", "SALAMANDRE", "WARREGAL/JAGO", "CANONNIER",
+          "ARIEL", "CHASSEUR ÉPIQUE", "CAVALIERS", "TROUPES"
+        ]
+      },
+      it: {
+        modalTitle: "Istruzioni",
+        step1: "Trova la tua leadership",
+        step2Title: "Seleziona il layout del dispositivo che stai usando (PC o Telefono)",
+        step2Sub: "Ogni dispositivo ha un ordine diverso nel mostrare le truppe. Questa opzione aiuta a far corrispondere tale ordine, rendendo più facile l'inserimento dei numeri corretti.",
+        step3Title: "Seleziona la modalità di accumulo",
+        step3a: "<strong>Conservativo</strong> - garantisce il corretto ordine di attacco",
+        step3b: "<strong>Aggressivo</strong> - permette di trasportare più truppe a parità di leadership, ma anche un minimo problema con il bonus salute (ricerca mancante, gemma o artefatto errati) può rovinare l'ordine di attacco",
+        step3c: "<strong>Moderato</strong> è la via di mezzo",
+        step3Sub: "Sperimenta e vedi cosa funziona meglio per te",
+        step4: "Regola il 'numero di base' finché la leadership totale nel calcolatore non corrisponde alla tua leadership.",
+        step5: "Buon divertimento 😊",
+        title: "Calcolatore Stacking T9",
+        subtitle: "Calcola tutti i tipi di truppe, mostri e mercenari in base al valore inserito",
+        instruction: "Modifica il 'valore di base' finché non corrisponde alla tua Leadership Totale e Dominanza",
+        deviceLabel: "Layout Dispositivo",
+        optPhone: "Telefono",
+        optPc: "PC",
+        stackingLabel: "Modo di Acumulo",
+        optConservative: "Conservativo",
+        optModerate: "Moderato",
+        optAggressive: "Aggressivo",
+        baseLabel: "Valore di Base (Arcieri G9)",
+        leadershipLabel: "Leadership Totale Richiesta",
+        monsterBaseLabel: "Numero Base Mostri (Draghi M9)",
+        dominanceLabel: "Dominanza Totale Richiesta",
+        josephineLabel: "Includi Josephine II",
+        josephineName: "JOSEPHINE II",
+        mercenariesTitle: "Mercenari",
+        mercenariesNote: "Numero massimo di mercenari, regola in base alla disponibilità",
+        monstersTitle: "Mostri",
+        troopsTitle: "Truppe",
+        colUnitName: "Nome Unità",
+        colCount: "Quantità",
+        colGroup: "Livello",
+        colTroopType: "Tipo di Truppa",
+        troops: [
+          "CORVO IMPERIALE II", "LEONE REGALE II", "CORVO IMPERIALE I", "LEONE REGALE I",
+          "DILANIATORE II", "CHIOMABIANCA II", "DILANIATORE I", "CHIOMABIANCA I",
+          "PURIFICATORE II", "CASTIGATORE II", "LEGITTIMISTA II", "DUELLANTE II",
+          "PURIFICATORE I", "CASTIGATORE I", "LEGITTIMISTA I", "DUELLANTE I"
+        ],
+        monsters: ["M9", "M8", "M7"],
+        monsterCascade: [
+          "M9 DEVASTATORE II", "M9 KRAKEN II", "M9 FURFANTE II", "M8 DEVASTATORE I",
+          "M9 FENICE II", "M8 KRAKEN I", "M8 FURFANTE I", "M7 SIGNORE DEL VENTO",
+          "M7 COLOSSO", "M7 TERRORE", "M7 DRAGO NERO", "M8 FENICE I"
+        ],
+        mercenaries: [
+          "VIVERNA", "GUARDIANO", "SALAMANDRA", "WARREGAL/JAGO", "CANNONIERE ETERNO",
+          "ARIEL", "CACCIATORE DI MOSTRI EPICI", "CAVALIERI", "TRUPPE"
+        ]
+      },
+      es: {
+        modalTitle: "Instrucciones",
+        step1: "Encuentra tu liderazgo",
+        step2Title: "Selecciona el diseño del dispositivo que usas (PC o Teléfono)",
+        step2Sub: "Cada dispositivo tiene un orden diferente para mostrar las tropas. Esta opción ayuda a coincidir con ese orden, facilitando el ingreso de los números correctos.",
+        step3Title: "Selecciona el modo de acumulación",
+        step3a: "<strong>Conservador</strong> - garantiza el orden de ataque correcto",
+        step3b: "<strong>Agresivo</strong> - permite llevar más tropas con el mismo liderazgo, pero un problema menor de bonificación de salud (investigación faltante, gema o artefacto incorrecto) puede arruinar el orden de ataque",
+        step3c: "<strong>Moderado</strong> es el punto medio",
+        step3Sub: "Experimenta y mira qué te funciona",
+        step4: "Ajusta el 'número base' hasta que el liderazgo total en la calculadora coincida con tu liderazgo.",
+        step5: "¡Que te diviertas! 😊",
+        title: "Calculadora de Stacking T9",
+        subtitle: "Calcula todos los tipos de tropas, monstruos y mercenarios según el valor ingresado",
+        instruction: "Cambia el 'valor base' hasta que coincida con tu Liderazgo Total y Dominio",
+        deviceLabel: "Diseño del Dispositivo",
+        optPhone: "Teléfono",
+        optPc: "PC",
+        stackingLabel: "Modo de Acumulación",
+        optConservative: "Conservador",
+        optModerate: "Moderato",
+        optAggressive: "Agresivo",
+        baseLabel: "Valor Base (Unidades a Distancia G9)",
+        leadershipLabel: "Liderazgo Total Requerido",
+        monsterBaseLabel: "Número Base de Monstruos (Dragones M9)",
+        dominanceLabel: "Dominio Total Requerido",
+        josephineLabel: "Incluir Josephine II",
+        josephineName: "JOSEPHINE II",
+        mercenariesTitle: "Mercenarios",
+        mercenariesNote: "Número máximo de mercenarios, ajustar según disponibilidad",
+        monstersTitle: "Monstruos",
+        troopsTitle: "Tropas",
+        colUnitName: "Nombre de Unidad",
+        colCount: "Cantidad",
+        colGroup: "Nivel",
+        colTroopType: "Tipo de Tropa",
+        troops: [
+          "CORAX II", "LEÓN REAL II", "CORAX I", "LEÓN REAL I",
+          "APLASTADOR II", "MANTOBLANCO II", "APLASTADOR I", "MANTOBLANCO I",
+          "PURIFICADOR II", "CASTIGADOR II", "LEGITIMISTA II", "DUELISTA II",
+          "PURIFICADOR I", "CASTIGADOR I", "LEGITIMISTA I", "DUELISTA I"
+        ],
+        monsters: ["M9", "M8", "M7"],
+        monsterCascade: [
+          "M9 DEVASTADOR II", "M9 KRAKEN II", "M9 EMBAUCADOR II", "M8 DEVASTADOR I",
+          "M9 FÉNIX II", "M8 KRAKEN I", "M8 EMBAUCADOR I", "M7 SEÑOR DEL VIENTO",
+          "M7 COLOSO", "M7 TERROR", "M7 DRAGÓN NEGRO", "M8 FÉNIX I"
+        ],
+        mercenaries: [
+          "GUIVERNO", "CABALLERO", "SALAMANDRA", "WARREGAL/JAGO", "CAÑONERO ETERNO",
+          "ARIEL", "CAZADOR ÉPICO", "JINETES", "TROPAS"
+        ]
+      },
+      de: {
+        modalTitle: "Anleitung",
+        step1: "Finden Sie Ihre Führung",
+        step2Title: "Wählen Sie Ihr Gerätelayout (PC oder Handy)",
+        step2Sub: "Jedes Gerät zeigt die Truppen in einer anderen Reihenfolge an. Diese Option hilft dabei, diese Reihenfolge anzupassen, um die richtigen Zahlen leichter einzugeben.",
+        step3Title: "Wählen Sie den Stacking-Modus",
+        step3a: "<strong>Konservativ</strong> - garantiert die richtige Angriffsreihenfolge",
+        step3b: "<strong>Aggressiv</strong> - erlaubt mehr Truppen mit derselben Führung, aber kleine Abweichungen beim Gesundheitsbonus (fehlende Forschung, falscher Edelstein oder Artefakt) können die Angriffsreihenfolge stören",
+        step3c: "<strong>Moderat</strong> ist der Mittelweg",
+        step3Sub: "Experimentieren Sie und sehen Sie, was für Sie funktioniert",
+        step4: "Passen Sie den 'Basiswert' an, bis die Gesamtführung im Rechner Ihrer Führung entspricht.",
+        step5: "Viel Spaß! 😊",
+        title: "T9 Stacking Rechner",
+        subtitle: "Berechnet alle Truppentypen, Monster und Söldner basierend auf dem Eingabewert",
+        instruction: "Ändern Sie den 'Basiswert', bis er mit Ihrer Gesamtführung und Dominanz übereinstimmt",
+        deviceLabel: "Geräte-Layout",
+        optPhone: "Handy",
+        optPc: "PC",
+        stackingLabel: "Stacking-Modus",
+        optConservative: "Konservativ",
+        optModerate: "Moderat",
+        optAggressive: "Aggressiv",
+        baseLabel: "Basiswert (Fernkampfeinheiten G9)",
+        leadershipLabel: "Erforderliche Gesamtführung",
+        monsterBaseLabel: "Basiswert Monster (Drachen M9)",
+        dominanceLabel: "Erforderliche Gesamtdominanz",
+        josephineLabel: "Josephine II einbeziehen",
+        josephineName: "JOSEPHINE II",
+        mercenariesTitle: "Söldner",
+        mercenariesNote: "Maximale Anzahl an Söldnern, je nach Verfügbarkeit anpassen",
+        monstersTitle: "Monster",
+        troopsTitle: "Truppen",
+        colUnitName: "Einheitsname",
+        colCount: "Anzahl",
+        colGroup: "Stufe",
+        colTroopType: "Truppentyp",
+        troops: [
+          "CORAX II", "KÖNIGSLÖWE II", "CORAX I", "KÖNIGSLÖWE I",
+          "PEINIGER II", "WEISSMÄHNE II", "PEINIGER I", "WEISSMÄHNE I",
+          "REINIGER II", "BESTRAFER II", "LEGITIMIST II", "DUELLANT II",
+          "REINIGER I", "BESTRAFER I", "LEGITIMIST I", "DUELLANT I"
+        ],
+        monsters: ["M9", "M8", "M7"],
+        monsterCascade: [
+          "M9 VERWÜSTER II", "M9 KRAKEN II", "M9 SCHELM II", "M8 VERWÜSTER I",
+          "M9 PHÖNIX II", "M8 KRAKEN I", "M8 SCHELM I", "M7 WINDHERR",
+          "M7 KOLOSS", "M7 SCHRECKEN", "M7 SCHWARZER DRACHE", "M8 PHÖNIX I"
+        ],
+        mercenaries: [
+          "LINDWURM", "WÄCHTER", "SALAMANDER", "WARREGAL/JAGO", "KANONIER",
+          "ARIEL", "EPISCHER JÄGER", "REITER", "TRUPPEN"
+        ]
+      }
+    };
+
+    function openModal() {
+      document.getElementById('helpModal').classList.add('show');
+    }
+
+    function closeModal() {
+      document.getElementById('helpModal').classList.remove('show');
+    }
+
+    function closeModalOnOverlay(e) {
+      if (e.target.id === 'helpModal') {
+        closeModal();
+      }
+    }
+
+    function handleBeforeInput(e) {
+      if (e.data && !/^[0-9]+$/.test(e.data)) {
+        e.preventDefault();
+      }
+    }
+
+    function handleInput(e) {
+      let val = e.target.value.replace(/[^0-9]/g, '');
+      if (val.length > 1 && val.startsWith('0')) {
+        val = val.replace(/^0+/, '');
+      }
+      e.target.value = val;
+      calculate();
+    }
+
+    function handlePaste(e) {
+      e.preventDefault();
+      const paste = (e.clipboardData || window.clipboardData).getData('text');
+      const clean = paste.replace(/[^0-9]/g, '').replace(/^0+/, '');
+      if (clean) {
+        e.target.value = clean;
+        calculate();
+      }
+    }
+
+    function toggleDropdown() {
+      document.getElementById('langDropdown').classList.toggle('show');
+    }
+
+    function selectLanguage(code, name, flagCode) {
+      currentLang = code;
+      document.getElementById('currentLangText').innerText = name;
+      document.getElementById('currentFlag').src = `https://flagcdn.com/w40/${flagCode}.png`;
+      document.getElementById('currentFlag').alt = `${flagCode.toUpperCase()} Flag`;
+      document.getElementById('langDropdown').classList.remove('show');
+      
+      updateTextLabels();
+      calculate();
+    }
+
+    window.onclick = function(event) {
+      if (!event.target.closest('.custom-lang-wrapper')) {
+        const dropdown = document.getElementById('langDropdown');
+        if (dropdown && dropdown.classList.contains('show')) {
+          dropdown.classList.remove('show');
+        }
+      }
+    };
+
+    function updateTextLabels() {
+      const t = translations[currentLang];
+      
+      document.getElementById('txtBtnInstructions').innerText = t.modalTitle;
+      document.getElementById('txtModalTitle').innerText = t.modalTitle;
+      document.getElementById('txtStep1').innerText = t.step1;
+      document.getElementById('txtStep2Title').innerText = t.step2Title;
+      document.getElementById('txtStep2Sub').innerText = t.step2Sub;
+      document.getElementById('txtStep3Title').innerText = t.step3Title;
+      document.getElementById('txtStep3a').innerHTML = t.step3a;
+      document.getElementById('txtStep3b').innerHTML = t.step3b;
+      document.getElementById('txtStep3c').innerHTML = t.step3c;
+      document.getElementById('txtStep3Sub').innerText = t.step3Sub;
+      document.getElementById('txtStep4').innerText = t.step4;
+      document.getElementById('txtStep5').innerText = t.step5;
+
+      document.getElementById('txtTitle').innerText = t.title;
+      document.getElementById('txtSubtitle').innerText = t.subtitle;
+      document.getElementById('txtInstruction').innerText = t.instruction;
+      document.getElementById('txtDeviceLabel').innerText = t.deviceLabel;
+      document.getElementById('optPhone').innerText = t.optPhone;
+      document.getElementById('optPc').innerText = t.optPc;
+      document.getElementById('txtStackingLabel').innerText = t.stackingLabel;
+      document.getElementById('optConservative').innerText = t.optConservative;
+      document.getElementById('optModerate').innerText = t.optModerate;
+      document.getElementById('optAggressive').innerText = t.optAggressive;
+      document.getElementById('txtBaseLabel').innerText = t.baseLabel;
+      document.getElementById('txtLeadershipLabel').innerText = t.leadershipLabel;
+      document.getElementById('txtMonsterBaseLabel').innerText = t.monsterBaseLabel;
+      document.getElementById('txtDominanceLabel').innerText = t.dominanceLabel;
+      document.getElementById('txtJosephineLabel').innerText = t.josephineLabel;
+      document.getElementById('txtColMonsterTier').innerText = t.colGroup;
+      document.getElementById('txtMercenariesTitle').innerText = t.mercenariesTitle;
+      document.getElementById('txtMercenariesNote').innerText = t.mercenariesNote;
+      document.getElementById('txtColMercUnit').innerText = t.colUnitName;
+      document.getElementById('txtColMercCount').innerText = t.colCount;
+      document.getElementById('txtMonstersTitle').innerText = t.monstersTitle;
+      document.getElementById('txtColMonsterUnit').innerText = t.colUnitName;
+      document.getElementById('txtColMonsterCount').innerText = t.colCount;
+      document.getElementById('txtTroopsTitle').innerText = t.troopsTitle;
+      document.getElementById('txtColTroopGroup').innerText = t.colGroup;
+      document.getElementById('txtColTroopType').innerText = t.colTroopType;
+      document.getElementById('txtColTroopCount').innerText = t.colCount;
+    }
+
+    function excelRound(num) {
+      return Math.round((num + Number.EPSILON) * 100000) / 100000;
+    }
+
+    function calculate() {
+      const rawVal = document.getElementById('baseInput').value;
+      const baseInput = parseFloat(rawVal);
+      const rawMonsterVal = document.getElementById('monsterBaseInput').value;
+      const monsterBaseInput = parseFloat(rawMonsterVal);
+      const stackingMode = parseFloat(document.getElementById('stackingModeSelect').value) || 0.005;
+      const deviceMode = document.getElementById('deviceModeSelect').value;
+
+      const troopsTable = document.getElementById('troopsTable');
+      const monstersTable = document.getElementById('monstersTable');
+      const mercenariesTable = document.getElementById('mercenariesTable');
+      const totalLeadershipEl = document.getElementById('totalLeadership');
+      const totalDominanceEl = document.getElementById('totalDominance');
+
+      troopsTable.innerHTML = '';
+      monstersTable.innerHTML = '';
+      mercenariesTable.innerHTML = '';
+
+      if (isNaN(baseInput) || baseInput <= 0) {
+        totalLeadershipEl.innerText = '0';
+        return;
+      }
+
+      const t = translations[currentLang];
+
+      const CASCADE_DEFS = [
+        { key: 'g9_ranged', group: 'G9', hp: 16530,  factor: 1,  typeIdx: 8,  isBase: true },
+        { key: 'g9_mounted',group: 'G9', hp: 33060,  factor: 2,  typeIdx: 4,  isBase: false },
+        { key: 'corax_2',   group: 'G9', hp: 330600, factor: 20, typeIdx: 0,  isBase: false },
+        { key: 'g8_ranged', group: 'G8', hp: 9180,   factor: 1,  typeIdx: 12, isBase: false },
+        { key: 'g8_mounted',group: 'G8', hp: 18360,  factor: 2,  typeIdx: 6,  isBase: false },
+        { key: 'corax_1',   group: 'G8', hp: 183600, factor: 20, typeIdx: 2,  isBase: false },
+        { key: 'g9_melee',  group: 'G9', hp: 16530,  factor: 1,  typeIdx: 9,  isBase: false },
+        { key: 's9_ranged', group: 'S9', hp: 16530,  factor: 1,  typeIdx: 10, isBase: false },
+        { key: 's9_mounted',group: 'S9', hp: 33060,  factor: 2,  typeIdx: 5,  isBase: false },
+        { key: 'g8_melee',  group: 'G8', hp: 9180,   factor: 1,  typeIdx: 13, isBase: false },
+        { key: 's8_ranged', group: 'S8', hp: 9180,   factor: 1,  typeIdx: 14, isBase: false },
+        { key: 's8_mounted',group: 'S8', hp: 18360,  factor: 2,  typeIdx: 7,  isBase: false },
+        { key: 's9_melee',  group: 'S9', hp: 16530,  factor: 1,  typeIdx: 11, isBase: false },
+        { key: 's8_melee',  group: 'S8', hp: 9180,   factor: 1,  typeIdx: 15, isBase: false },
+        { key: 'lions_2',   group: 'S9', hp: 330600, factor: 20, typeIdx: 1,  isBase: false },
+        { key: 'lions_1',   group: 'S8', hp: 183600, factor: 20, typeIdx: 3,  isBase: false }
+      ];
+
+      let resultsMap = {};
+      let previousStackHealth = 0;
+      let totalLeadership = 0;
+
+      for (let i = 0; i < CASCADE_DEFS.length; i++) {
+        const item = CASCADE_DEFS[i];
+        let count = 0;
+
+        if (item.isBase) {
+          count = baseInput;
+        } else {
+          const rawValue = (previousStackHealth * (1 + stackingMode)) / item.hp;
+          count = Math.round(excelRound(rawValue));
+        }
+
+        const stackHealth = count * item.hp;
+        const leadership = count * item.factor;
+
+        previousStackHealth = stackHealth;
+        totalLeadership += leadership;
+
+        resultsMap[item.key] = {
+          group: item.group,
+          type: t.troops[item.typeIdx],
+          count: count
+        };
+      }
+
+      // Optional 17th link: Josephine II. When included, it is calculated from
+      // Lion I's finished stack health using a hardcoded 1.4 multiplier (not the
+      // Conservative/Moderate/Aggressive stacking mode), and its leadership only
+      // counts toward the total when the checkbox is checked.
+      const includeJosephine = document.getElementById('includeJosephineCheckbox').checked;
+      if (includeJosephine) {
+        const josephineHp = 165300;
+        const josephineFactor = 10;
+        const josephineCount = Math.round(excelRound((previousStackHealth * 1.4) / josephineHp));
+        const josephineLeadership = josephineCount * josephineFactor;
+
+        totalLeadership += josephineLeadership;
+
+        resultsMap.josephine_ii = {
+          group: 'E9',
+          type: t.josephineName,
+          count: josephineCount
+        };
+      }
+
+      totalLeadershipEl.innerText = Math.floor(totalLeadership).toLocaleString();
+
+      let troopsData = [];
+
+      if (deviceMode === 'pc') {
+        troopsData = [
+          { group: resultsMap.corax_2.group, type: resultsMap.corax_2.type, count: resultsMap.corax_2.count },
+          { group: resultsMap.lions_2.group, type: resultsMap.lions_2.type, count: resultsMap.lions_2.count },
+          { group: resultsMap.lions_1.group, type: resultsMap.lions_1.type, count: resultsMap.lions_1.count },
+          { group: resultsMap.corax_1.group, type: resultsMap.corax_1.type, count: resultsMap.corax_1.count },
+          ...(includeJosephine ? [{ group: resultsMap.josephine_ii.group, type: resultsMap.josephine_ii.type, count: resultsMap.josephine_ii.count }] : []),
+          { divider: true },
+          { group: resultsMap.g9_mounted.group, type: resultsMap.g9_mounted.type, count: resultsMap.g9_mounted.count },
+          { group: resultsMap.s9_mounted.group, type: resultsMap.s9_mounted.type, count: resultsMap.s9_mounted.count },
+          { group: resultsMap.g8_mounted.group, type: resultsMap.g8_mounted.type, count: resultsMap.g8_mounted.count },
+          { group: resultsMap.s8_mounted.group, type: resultsMap.s8_mounted.type, count: resultsMap.s8_mounted.count },
+          { divider: true },
+          { group: resultsMap.g9_ranged.group, type: resultsMap.g9_ranged.type, count: resultsMap.g9_ranged.count },
+          { group: resultsMap.s9_ranged.group, type: resultsMap.s9_ranged.type, count: resultsMap.s9_ranged.count },
+          { group: resultsMap.s9_melee.group, type: resultsMap.s9_melee.type, count: resultsMap.s9_melee.count },
+          { group: resultsMap.g9_melee.group, type: resultsMap.g9_melee.type, count: resultsMap.g9_melee.count },
+          { divider: true },
+          { group: resultsMap.g8_melee.group, type: resultsMap.g8_melee.type, count: resultsMap.g8_melee.count },
+          { group: resultsMap.s8_ranged.group, type: resultsMap.s8_ranged.type, count: resultsMap.s8_ranged.count },
+          { group: resultsMap.s8_melee.group, type: resultsMap.s8_melee.type, count: resultsMap.s8_melee.count },
+          { group: resultsMap.g8_ranged.group, type: resultsMap.g8_ranged.type, count: resultsMap.g8_ranged.count }
+        ];
+      } else {
+        troopsData = [
+          { group: resultsMap.corax_2.group, type: resultsMap.corax_2.type, count: resultsMap.corax_2.count },
+          { group: resultsMap.lions_2.group, type: resultsMap.lions_2.type, count: resultsMap.lions_2.count },
+          { group: resultsMap.corax_1.group, type: resultsMap.corax_1.type, count: resultsMap.corax_1.count },
+          { group: resultsMap.lions_1.group, type: resultsMap.lions_1.type, count: resultsMap.lions_1.count },
+          ...(includeJosephine ? [{ group: resultsMap.josephine_ii.group, type: resultsMap.josephine_ii.type, count: resultsMap.josephine_ii.count }] : []),
+          { divider: true },
+          { group: resultsMap.g9_mounted.group, type: resultsMap.g9_mounted.type, count: resultsMap.g9_mounted.count },
+          { group: resultsMap.s9_mounted.group, type: resultsMap.s9_mounted.type, count: resultsMap.s9_mounted.count },
+          { group: resultsMap.g8_mounted.group, type: resultsMap.g8_mounted.type, count: resultsMap.g8_mounted.count },
+          { group: resultsMap.s8_mounted.group, type: resultsMap.s8_mounted.type, count: resultsMap.s8_mounted.count },
+          { divider: true },
+          { group: resultsMap.g9_ranged.group, type: resultsMap.g9_ranged.type, count: resultsMap.g9_ranged.count },
+          { group: resultsMap.g9_melee.group, type: resultsMap.g9_melee.type, count: resultsMap.g9_melee.count },
+          { group: resultsMap.s9_ranged.group, type: resultsMap.s9_ranged.type, count: resultsMap.s9_ranged.count },
+          { group: resultsMap.s9_melee.group, type: resultsMap.s9_melee.type, count: resultsMap.s9_melee.count },
+          { divider: true },
+          { group: resultsMap.g8_ranged.group, type: resultsMap.g8_ranged.type, count: resultsMap.g8_ranged.count },
+          { group: resultsMap.g8_melee.group, type: resultsMap.g8_melee.type, count: resultsMap.g8_melee.count },
+          { group: resultsMap.s8_ranged.group, type: resultsMap.s8_ranged.type, count: resultsMap.s8_ranged.count },
+          { group: resultsMap.s8_melee.group, type: resultsMap.s8_melee.type, count: resultsMap.s8_melee.count }
+        ];
+      }
+
+      const factor = baseInput * 5510;
+
+      // Monster cascade (Sheet2, rows 2-13): same cascade principle as the troop
+      // cascade above, chained off the "Dragons M9" base (M9 Devastator II).
+      // hp = unit health incl. bonus (H column), factor = Dominance (O column).
+      const MONSTER_CASCADE_DEFS = [
+        { key: 'm9_devastator_ii', tier: 'M9', hp: 55721250, factor: 53, typeIdx: 0,  isBase: true },
+        { key: 'm9_kraken_ii',     tier: 'M9', hp: 57626250, factor: 55, typeIdx: 1,  isBase: false },
+        { key: 'm9_trickster_ii', tier: 'M9', hp: 54768750, factor: 52, typeIdx: 2,  isBase: false },
+        { key: 'm8_devastator_i',  tier: 'M8', hp: 30956250, factor: 53, typeIdx: 3,  isBase: false },
+        { key: 'm9_phoenix_ii',   tier: 'M9', hp: 56673750, factor: 54, typeIdx: 4,  isBase: false },
+        { key: 'm8_kraken_i',     tier: 'M8', hp: 31908750, factor: 55, typeIdx: 5,  isBase: false },
+        { key: 'm8_trickster_i',  tier: 'M8', hp: 30480000, factor: 52, typeIdx: 6,  isBase: false },
+        { key: 'm7_wind_lord',    tier: 'M7', hp: 14763750, factor: 45, typeIdx: 7,  isBase: false },
+        { key: 'm7_colossus',     tier: 'M7', hp: 13811250, factor: 43, typeIdx: 8,  isBase: false },
+        { key: 'm7_terror',       tier: 'M7', hp: 13335000, factor: 41, typeIdx: 9,  isBase: false },
+        { key: 'm7_black_dragon', tier: 'M7', hp: 14287500, factor: 44, typeIdx: 10, isBase: false },
+        { key: 'm8_phoenix_i',    tier: 'M8', hp: 31432500, factor: 54, typeIdx: 11, isBase: false }
+      ];
+
+      let monsterResultsMap = {};
+      let totalDominance = 0;
+
+      if (!isNaN(monsterBaseInput) && monsterBaseInput > 0) {
+        let previousMonsterStackHealth = 0;
+
+        for (let i = 0; i < MONSTER_CASCADE_DEFS.length; i++) {
+          const item = MONSTER_CASCADE_DEFS[i];
+          let count = 0;
+
+          if (item.isBase) {
+            count = monsterBaseInput;
+          } else {
+            const rawValue = (previousMonsterStackHealth * (1 + stackingMode)) / item.hp;
+            count = Math.round(excelRound(rawValue));
+          }
+
+          const stackHealth = count * item.hp;
+          const dominance = count * item.factor;
+
+          previousMonsterStackHealth = stackHealth;
+          totalDominance += dominance;
+
+          monsterResultsMap[item.key] = {
+            tier: item.tier,
+            name: t.monsterCascade[item.typeIdx],
+            count: count
+          };
+        }
+      }
+
+      totalDominanceEl.innerText = Math.floor(totalDominance).toLocaleString();
+
+      // Display order per Stacking!J (grouped M9 -> M8 -> M7, with dividers).
+      let monstersData = [];
+      if (Object.keys(monsterResultsMap).length > 0) {
+        monstersData = [
+          monsterResultsMap.m9_kraken_ii,
+          monsterResultsMap.m9_phoenix_ii,
+          monsterResultsMap.m9_devastator_ii,
+          monsterResultsMap.m9_trickster_ii,
+          { divider: true },
+          monsterResultsMap.m8_kraken_i,
+          monsterResultsMap.m8_phoenix_i,
+          monsterResultsMap.m8_devastator_i,
+          monsterResultsMap.m8_trickster_i,
+          { divider: true },
+          monsterResultsMap.m7_wind_lord,
+          monsterResultsMap.m7_black_dragon,
+          monsterResultsMap.m7_colossus,
+          monsterResultsMap.m7_terror
+        ];
+      }
+
+      const mercenariesData = [
+        { name: t.mercenaries[0], val: Math.floor((factor / 690000) * 0.9 * 0.9) },
+        { name: t.mercenaries[1], val: Math.floor((factor / 470000) * 0.9 * 0.9) },
+        { name: t.mercenaries[2], val: Math.floor((factor / 410000) * 0.9 * 0.9) },
+        { name: t.mercenaries[3], val: Math.floor((factor / 220000) * 0.9 * 0.9) },
+        { name: t.mercenaries[4], val: Math.floor((factor / 440000) * 0.9 * 0.9) },
+        { name: t.mercenaries[5], val: Math.round(baseInput * 0.0408) },
+        { name: t.mercenaries[6], val: Math.floor((factor / 25000) * 0.9) },
+        { name: t.mercenaries[7], val: Math.floor((factor / 22000) * 0.9) },
+        { name: t.mercenaries[8], val: Math.floor((factor / 11000) * 0.9) },
+      ];
+
+      function fmt(v) {
+        return Math.max(0, Math.floor(v)).toLocaleString();
+      }
+
+      troopsData.forEach(item => {
+        if (item.divider) {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td colspan="3" style="padding: 4px; background: rgba(0,0,0,0.02);"></td>`;
+          troopsTable.appendChild(tr);
+          return;
+        }
+
+        const badgeClass = `badge-${item.group.toLowerCase()}`;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><span class="badge ${badgeClass}">${item.group}</span></td>
+          <td><strong>${item.type}</strong></td>
+          <td class="num-val">${fmt(item.count)}</td>
+        `;
+        troopsTable.appendChild(tr);
+      });
+
+      mercenariesData.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${item.name}</strong></td>
+          <td class="num-val">${fmt(item.val)}</td>
+        `;
+        mercenariesTable.appendChild(tr);
+      });
+
+      monstersData.forEach(item => {
+        if (item.divider) {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td colspan="3" style="padding: 4px; background: rgba(0,0,0,0.02);"></td>`;
+          monstersTable.appendChild(tr);
+          return;
+        }
+
+        const badgeClass = `badge-${item.tier.toLowerCase()}`;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><span class="badge ${badgeClass}">${item.tier}</span></td>
+          <td><strong>${item.name}</strong></td>
+          <td class="num-val">${fmt(item.count)}</td>
+        `;
+        monstersTable.appendChild(tr);
+      });
+    }
+
+    calculate();
+  </script>
+</body>
+</html>
