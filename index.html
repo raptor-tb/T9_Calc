@@ -565,7 +565,7 @@
 
     <div class="input-card">
       <div class="input-group">
-        <label for="baseInput" id="txtBaseLabel">Base Value (Ranged Units G9)</label>
+        <label for="baseInput" id="txtBaseLabel">Silver Troops Base Value (Ranged Units G9)</label>
         <input 
           type="text" 
           inputmode="numeric" 
@@ -585,7 +585,7 @@
 
     <div class="input-card">
       <div class="input-group">
-        <label for="monsterBaseInput" id="txtMonsterBaseLabel">Monster Base Number (Dragons M9)</label>
+        <label for="monsterBaseInput" id="txtMonsterBaseLabel">Monster Base Value (Dragons M9)</label>
         <input 
           type="text" 
           inputmode="numeric" 
@@ -661,7 +661,7 @@
       </div>
       <div class="modal-body">
         <ol>
-          <li id="txtStep1">Find your leadership</li>
+          <li id="txtStep1">Find your leadership and dominance</li>
           <li id="txtStep2">
             <span id="txtStep2Title">Select the device layout you are using (PC or Phone)</span><br>
             <small style="color: var(--text-muted);" id="txtStep2Sub">Each device has a different order showing the troops. This option helps to match that order, making easier entering the correct numbers.</small>
@@ -675,8 +675,9 @@
             </ul>
             <small style="color: var(--text-muted);" id="txtStep3Sub">Experiment and see what works for you</small>
           </li>
-          <li id="txtStep4">Adjust the 'base number' until the total leadership in the calculator matches your leadership.</li>
-          <li id="txtStep5">Have fun 😊</li>
+          <li id="txtStep4">Select if you want to add Josephine II in your stacking as your sacrificial stack</li>
+          <li id="txtStep5">Adjust the 'base value' until the total leadership and dominance in the calculator matches your leadership and dominance actual values.</li>
+          <li id="txtStep6">Have fun :)</li>
         </ol>
       </div>
     </div>
@@ -688,7 +689,7 @@
     const translations = {
       en: {
         modalTitle: "Instructions",
-        step1: "Find your leadership",
+        step1: "Find your leadership and dominance",
         step2Title: "Select the device layout you are using (PC or Phone)",
         step2Sub: "Each device has a different order showing the troops. This option helps to match that order, making easier entering the correct numbers.",
         step3Title: "Select the stacking mode",
@@ -696,8 +697,9 @@
         step3b: "<strong>Aggressive</strong> - allows to carry more troops with the same leadership but even a minor problem with the health bonus (missing research, wrong gem or artifact) can mess up the order of attack",
         step3c: "<strong>Moderate</strong> is the middle ground",
         step3Sub: "Experiment and see what works for you",
-        step4: "Adjust the 'base number' until the total leadership in the calculator matches your leadership.",
-        step5: "Have fun 😊",
+        step4: "Select if you want to add Josephine II in your stacking as your sacrificial stack",
+        step5: "Adjust the 'base value' until the total leadership and dominance in the calculator matches your leadership and dominance actual values.",
+        step6: "Have fun :)",
         title: "T9 Stacking Calculator",
         subtitle: "Calculates all troop types, monsters, and mercenaries based on input value",
         instruction: "Change the number of the 'base value' until you match your total Leadership and Dominance",
@@ -708,9 +710,9 @@
         optConservative: "Conservative",
         optModerate: "Moderate",
         optAggressive: "Aggressive",
-        baseLabel: "Base Value (Ranged Units G9)",
+        baseLabel: "Silver Troops Base Value (Ranged Units G9)",
         leadershipLabel: "Total Leadership Required",
-        monsterBaseLabel: "Monster Base Number (Dragons M9)",
+        monsterBaseLabel: "Monster Base Value (Dragons M9)",
         dominanceLabel: "Total Dominance Required",
         josephineLabel: "Include Josephine II",
         josephineName: "JOSEPHINE II",
@@ -741,7 +743,7 @@
       },
       fr: {
         modalTitle: "Instructions",
-        step1: "Trouvez votre commandement",
+        step1: "Trouvez votre commandement et votre dominance",
         step2Title: "Sélectionnez la disposition de l'appareil utilisé (PC ou Téléphone)",
         step2Sub: "Chaque appareil a un ordre d'affichage différent pour les troupes. Cette option permet de faire correspondre cet ordre, facilitant la saisie des bons chiffres.",
         step3Title: "Sélectionnez le mode d'empilement",
@@ -749,8 +751,9 @@
         step3b: "<strong>Agressif</strong> - permet de transporter plus de troupes avec le même commandement, mais le moindre problème de bonus de santé (recherche manquante, mauvaise gemme ou artefact) peut perturber l'ordre d'attaque",
         step3c: "<strong>Modéré</strong> est le juste milieu",
         step3Sub: "Expérimentez et voyez ce qui fonctionne pour vous",
-        step4: "Ajustez le 'nombre de base' jusqu'à ce que le commandement total dans le calculateur corresponde à votre commandement.",
-        step5: "Amusez-vous bien 😊",
+        step4: "Sélectionnez si vous souhaitez ajouter Joséphine II à votre pile en tant que pile sacrificielle",
+        step5: "Ajustez la 'valeur de base' jusqu'à ce que le commandement total et la dominance dans le calculateur correspondent à vos valeurs réelles de commandement et de dominance.",
+        step6: "Amusez-vous bien :)",
         title: "Calculateur d'Empilement T9",
         subtitle: "Calcule tous les types de troupes, monstres et mercenaires en fonction de la valeur saisie",
         instruction: "Modifiez la 'valeur de base' jusqu'à ce qu'elle corresponde à votre Commandement Total et votre Dominance",
@@ -761,9 +764,9 @@
         optConservative: "Conservateur",
         optModerate: "Modéré",
         optAggressive: "Agressif",
-        baseLabel: "Valeur de Base (Unités à Distance G9)",
+        baseLabel: "Valeur de Base des Troupes d'Argent (Unités à Distance G9)",
         leadershipLabel: "Commandement Total Requis",
-        monsterBaseLabel: "Nombre de Base des Monstres (Dragons M9)",
+        monsterBaseLabel: "Valeur de Base des Monstres (Dragons M9)",
         dominanceLabel: "Dominance Totale Requise",
         josephineLabel: "Inclure Joséphine II",
         josephineName: "JOSÉPHINE II",
@@ -794,7 +797,7 @@
       },
       it: {
         modalTitle: "Istruzioni",
-        step1: "Trova la tua leadership",
+        step1: "Trova la tua leadership e la tua dominanza",
         step2Title: "Seleziona il layout del dispositivo che stai usando (PC o Telefono)",
         step2Sub: "Ogni dispositivo ha un ordine diverso nel mostrare le truppe. Questa opzione aiuta a far corrispondere tale ordine, rendendo più facile l'inserimento dei numeri corretti.",
         step3Title: "Seleziona la modalità di accumulo",
@@ -802,8 +805,9 @@
         step3b: "<strong>Aggressivo</strong> - permette di trasportare più truppe a parità di leadership, ma anche un minimo problema con il bonus salute (ricerca mancante, gemma o artefatto errati) può rovinare l'ordine di attacco",
         step3c: "<strong>Moderato</strong> è la via di mezzo",
         step3Sub: "Sperimenta e vedi cosa funziona meglio per te",
-        step4: "Regola il 'numero di base' finché la leadership totale nel calcolatore non corrisponde alla tua leadership.",
-        step5: "Buon divertimento 😊",
+        step4: "Seleziona se vuoi aggiungere Josephine II al tuo stack come stack sacrificale",
+        step5: "Regola il 'valore base' finché la leadership totale e la dominanza nel calcolatore non corrispondono ai tuoi valori reali di leadership e dominanza.",
+        step6: "Buon divertimento :)",
         title: "Calcolatore Stacking T9",
         subtitle: "Calcola tutti i tipi di truppe, mostri e mercenari in base al valore inserito",
         instruction: "Modifica il 'valore di base' finché non corrisponde alla tua Leadership Totale e Dominanza",
@@ -814,9 +818,9 @@
         optConservative: "Conservativo",
         optModerate: "Moderato",
         optAggressive: "Aggressivo",
-        baseLabel: "Valore di Base (Arcieri G9)",
+        baseLabel: "Valore Base delle Truppe d'Argento (Arcieri G9)",
         leadershipLabel: "Leadership Totale Richiesta",
-        monsterBaseLabel: "Numero Base Mostri (Draghi M9)",
+        monsterBaseLabel: "Valore Base dei Mostri (Draghi M9)",
         dominanceLabel: "Dominanza Totale Richiesta",
         josephineLabel: "Includi Josephine II",
         josephineName: "JOSEPHINE II",
@@ -847,7 +851,7 @@
       },
       es: {
         modalTitle: "Instrucciones",
-        step1: "Encuentra tu liderazgo",
+        step1: "Encuentra tu liderazgo y tu dominio",
         step2Title: "Selecciona el diseño del dispositivo que usas (PC o Teléfono)",
         step2Sub: "Cada dispositivo tiene un orden diferente para mostrar las tropas. Esta opción ayuda a coincidir con ese orden, facilitando el ingreso de los números correctos.",
         step3Title: "Selecciona el modo de acumulación",
@@ -855,8 +859,9 @@
         step3b: "<strong>Agresivo</strong> - permite llevar más tropas con el mismo liderazgo, pero un problema menor de bonificación de salud (investigación faltante, gema o artefacto incorrecto) puede arruinar el orden de ataque",
         step3c: "<strong>Moderado</strong> es el punto medio",
         step3Sub: "Experimenta y mira qué te funciona",
-        step4: "Ajusta el 'número base' hasta que el liderazgo total en la calculadora coincida con tu liderazgo.",
-        step5: "¡Que te diviertas! 😊",
+        step4: "Selecciona si quieres añadir Josephine II a tu pila como pila sacrificial",
+        step5: "Ajusta el 'valor base' hasta que el liderazgo total y el dominio en la calculadora coincidan con tus valores reales de liderazgo y dominio.",
+        step6: "¡Que te diviertas! :)",
         title: "Calculadora de Stacking T9",
         subtitle: "Calcula todos los tipos de tropas, monstruos y mercenarios según el valor ingresado",
         instruction: "Cambia el 'valor base' hasta que coincida con tu Liderazgo Total y Dominio",
@@ -867,9 +872,9 @@
         optConservative: "Conservador",
         optModerate: "Moderato",
         optAggressive: "Agresivo",
-        baseLabel: "Valor Base (Unidades a Distancia G9)",
+        baseLabel: "Valor Base de las Tropas de Plata (Unidades a Distancia G9)",
         leadershipLabel: "Liderazgo Total Requerido",
-        monsterBaseLabel: "Número Base de Monstruos (Dragones M9)",
+        monsterBaseLabel: "Valor Base de los Monstruos (Dragones M9)",
         dominanceLabel: "Dominio Total Requerido",
         josephineLabel: "Incluir Josephine II",
         josephineName: "JOSEPHINE II",
@@ -900,7 +905,7 @@
       },
       de: {
         modalTitle: "Anleitung",
-        step1: "Finden Sie Ihre Führung",
+        step1: "Finde deine Gesamtführung und Dominanz",
         step2Title: "Wählen Sie Ihr Gerätelayout (PC oder Handy)",
         step2Sub: "Jedes Gerät zeigt die Truppen in einer anderen Reihenfolge an. Diese Option hilft dabei, diese Reihenfolge anzupassen, um die richtigen Zahlen leichter einzugeben.",
         step3Title: "Wählen Sie den Stacking-Modus",
@@ -908,8 +913,9 @@
         step3b: "<strong>Aggressiv</strong> - erlaubt mehr Truppen mit derselben Führung, aber kleine Abweichungen beim Gesundheitsbonus (fehlende Forschung, falscher Edelstein oder Artefakt) können die Angriffsreihenfolge stören",
         step3c: "<strong>Moderat</strong> ist der Mittelweg",
         step3Sub: "Experimentieren Sie und sehen Sie, was für Sie funktioniert",
-        step4: "Passen Sie den 'Basiswert' an, bis die Gesamtführung im Rechner Ihrer Führung entspricht.",
-        step5: "Viel Spaß! 😊",
+        step4: "Wähle, ob du Josephine II als Opferstapel in deinen Stapel aufnehmen möchtest",
+        step5: "Passe den 'Basiswert' an, bis die Gesamtführung und Dominanz im Rechner deinen tatsächlichen Werten für Führung und Dominanz entsprechen.",
+        step6: "Viel Spaß! :)",
         title: "T9 Stacking Rechner",
         subtitle: "Berechnet alle Truppentypen, Monster und Söldner basierend auf dem Eingabewert",
         instruction: "Ändern Sie den 'Basiswert', bis er mit Ihrer Gesamtführung und Dominanz übereinstimmt",
@@ -920,9 +926,9 @@
         optConservative: "Konservativ",
         optModerate: "Moderat",
         optAggressive: "Aggressiv",
-        baseLabel: "Basiswert (Fernkampfeinheiten G9)",
+        baseLabel: "Basiswert der Silbertruppen (Fernkampfeinheiten G9)",
         leadershipLabel: "Erforderliche Gesamtführung",
-        monsterBaseLabel: "Basiswert Monster (Drachen M9)",
+        monsterBaseLabel: "Basiswert der Monster (Drachen M9)",
         dominanceLabel: "Erforderliche Gesamtdominanz",
         josephineLabel: "Josephine II einbeziehen",
         josephineName: "JOSEPHINE II",
@@ -1031,6 +1037,7 @@
       document.getElementById('txtStep3Sub').innerText = t.step3Sub;
       document.getElementById('txtStep4').innerText = t.step4;
       document.getElementById('txtStep5').innerText = t.step5;
+      document.getElementById('txtStep6').innerText = t.step6;
 
       document.getElementById('txtTitle').innerText = t.title;
       document.getElementById('txtSubtitle').innerText = t.subtitle;
