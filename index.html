@@ -1145,14 +1145,14 @@
       }
 
       // Optional 17th link: Josephine II. When included, it is calculated from
-      // Lion I's finished stack health using a hardcoded 1.4 multiplier (not the
+      // Lion I's finished stack health using a hardcoded 1.28 multiplier (not the
       // Conservative/Moderate/Aggressive stacking mode), and its leadership only
       // counts toward the total when the checkbox is checked.
       const includeJosephine = document.getElementById('includeJosephineCheckbox').checked;
       if (includeJosephine) {
         const josephineHp = 165300;
         const josephineFactor = 10;
-        const josephineCount = Math.round(excelRound((previousStackHealth * 1.4) / josephineHp));
+        const josephineCount = Math.round(excelRound((previousStackHealth * 1.28) / josephineHp));
         const josephineLeadership = josephineCount * josephineFactor;
 
         totalLeadership += josephineLeadership;
