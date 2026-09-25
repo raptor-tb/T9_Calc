@@ -361,7 +361,6 @@
       padding: 10px 12px;
       border-bottom: 1px solid var(--border);
       color: var(--text);
-      vertical-align: middle;
     }
 
     th {
@@ -393,22 +392,6 @@
     .badge-m7 { background-color: var(--group-m7); }
     .badge-e9 { background-color: var(--group-e9); }
 
-    .unit-icon {
-      width: 56px;
-      height: 56px;
-      object-fit: cover;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      background-color: #f1f5f9;
-      flex-shrink: 0;
-      display: inline-block;
-    }
-
-    .col-icon {
-      white-space: nowrap;
-      padding: 6px;
-    }
-
     .num-val {
       font-family: "Courier New", Courier, monospace;
       font-weight: 700;
@@ -416,6 +399,7 @@
       text-align: right;
     }
 
+    /* Modal Styling */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -627,7 +611,6 @@
           <table>
             <thead>
               <tr>
-                <th class="col-icon"></th>
                 <th id="txtColMercUnit">Unit Name</th>
                 <th style="text-align: right;" id="txtColMercCount">Count</th>
               </tr>
@@ -642,7 +625,6 @@
             <thead>
               <tr>
                 <th id="txtColMonsterTier">Tier</th>
-                <th class="col-icon"></th>
                 <th id="txtColMonsterUnit">Unit Name</th>
                 <th style="text-align: right;" id="txtColMonsterCount">Count</th>
               </tr>
@@ -658,9 +640,8 @@
           <table>
             <thead>
               <tr>
-                <th id="txtColTroopGroup">Tier</th>
-                <th class="col-icon"></th>
-                <th id="txtColTroopType">Unit Name</th>
+                <th id="txtColTroopGroup">Group</th>
+                <th id="txtColTroopType">Troop Type</th>
                 <th style="text-align: right;" id="txtColTroopCount">Count</th>
               </tr>
             </thead>
@@ -671,6 +652,7 @@
     </div>
   </div>
 
+  <!-- Instruction Popup Modal -->
   <div class="modal-overlay" id="helpModal" onclick="closeModalOnOverlay(event)">
     <div class="modal-card">
       <div class="modal-header">
@@ -695,7 +677,7 @@
           </li>
           <li id="txtStep4">Select if you want to add Josephine II in your stacking as your sacrificial stack</li>
           <li id="txtStep5">Adjust the 'base value' until the total leadership and dominance in the calculator matches your leadership and dominance actual values.</li>
-          <li id="txtStep6">Have fun 😊</li>
+          <li id="txtStep6">Have fun :)</li>
         </ol>
       </div>
     </div>
@@ -741,6 +723,7 @@
         colUnitName: "Unit Name",
         colCount: "Count",
         colGroup: "Tier",
+        colTroopType: "Troop Type",
         troops: [
           "CORAX II", "ROYAL LION II", "CORAX I", "ROYAL LION I",
           "SMITER II", "WHITEMANE II", "SMITER I", "WHITEMANE I",
@@ -794,6 +777,7 @@
         colUnitName: "Nom de l'Unité",
         colCount: "Quantité",
         colGroup: "Palier",
+        colTroopType: "Type de Troupe",
         troops: [
           "CORAX II", "LION ROYAL II", "CORAX I", "LION ROYAL I",
           "CHÂTIEUR II", "CRINIÈRE BLANCHE II", "CHÂTIEUR I", "CRINIÈRE BLANCHE I",
@@ -847,6 +831,7 @@
         colUnitName: "Nome Unità",
         colCount: "Quantità",
         colGroup: "Livello",
+        colTroopType: "Tipo di Truppa",
         troops: [
           "CORVO IMPERIALE II", "LEONE REGALE II", "CORVO IMPERIALE I", "LEONE REGALE I",
           "DILANIATORE II", "CHIOMABIANCA II", "DILANIATORE I", "CHIOMABIANCA I",
@@ -900,6 +885,7 @@
         colUnitName: "Nombre de Unidad",
         colCount: "Cantidad",
         colGroup: "Nivel",
+        colTroopType: "Tipo de Tropa",
         troops: [
           "CORAX II", "LEÓN REAL II", "CORAX I", "LEÓN REAL I",
           "APLASTADOR II", "MANTOBLANCO II", "APLASTADOR I", "MANTOBLANCO I",
@@ -946,13 +932,14 @@
         dominanceLabel: "Erforderliche Gesamtdominanz",
         josephineLabel: "Josephine II einbeziehen",
         josephineName: "JOSEPHINE II",
-        mercenariesTitle: "Mercenaries",
+        mercenariesTitle: "Söldner",
         mercenariesNote: "Maximale Anzahl an Söldnern, je nach Verfügbarkeit anpassen",
         monstersTitle: "Monster",
         troopsTitle: "Truppen",
         colUnitName: "Einheitsname",
         colCount: "Anzahl",
         colGroup: "Stufe",
+        colTroopType: "Truppentyp",
         troops: [
           "CORAX II", "KÖNIGSLÖWE II", "CORAX I", "KÖNIGSLÖWE I",
           "PEINIGER II", "WEISSMÄHNE II", "PEINIGER I", "WEISSMÄHNE I",
@@ -1077,56 +1064,12 @@
       document.getElementById('txtColMonsterCount').innerText = t.colCount;
       document.getElementById('txtTroopsTitle').innerText = t.troopsTitle;
       document.getElementById('txtColTroopGroup').innerText = t.colGroup;
-      document.getElementById('txtColTroopType').innerText = t.colUnitName;
+      document.getElementById('txtColTroopType').innerText = t.colTroopType;
       document.getElementById('txtColTroopCount').innerText = t.colCount;
     }
 
     function excelRound(num) {
       return Math.round((num + Number.EPSILON) * 100000) / 100000;
-    }
-
-    function getImageFileName(englishName) {
-      return `images/${englishName}.png`;
-    }
-
-    function getMonsterImageFileName(englishName) {
-      const monsterMap = {
-        "M7 WIND LORD": "Wind Lord.png",
-        "M7 TERROR": "Ancient Terror.png",
-        "M7 BLACK DRAGON": "Black Dragon.png",
-        "M7 COLOSSUS": "Destructive Colossus.png",
-        "M8 DEVASTATOR I": "Devastator I.png",
-        "M9 DEVASTATOR II": "Devastator II.png",
-        "M8 KRAKEN I": "Kraken I.png",
-        "M9 KRAKEN II": "Kraken II.png",
-        "M8 TRICKSTER I": "Trickster I.png",
-        "M9 TRICKSTER II": "Trickster II.png",
-        "M8 PHOENIX I": "Fire Phoenix I.png",
-        "M9 PHOENIX II": "Fire Phoenix II.png"
-      };
-      const filename = monsterMap[englishName] || `${englishName}.png`;
-      return `images/${filename}`;
-    }
-
-    function getMercenaryImageFileName(englishName) {
-      const mercMap = {
-        "WYVERN": `<img class="unit-icon" src="images/Wyvern.jpg" alt="WYVERN" onerror="this.style.display='none'">`,
-        "WARDEN": `<img class="unit-icon" src="images/Warden.jpg" alt="WARDEN" onerror="this.style.display='none'">`,
-        "SALAMANDER": `<img class="unit-icon" src="images/Demonic Salamander.jpg" alt="SALAMANDER" onerror="this.style.display='none'">`,
-        "WARREGAL/JAGO": `<img class="unit-icon" src="images/Warregal.jpg" alt="WARREGAL" onerror="this.style.display='none'"> <img class="unit-icon" src="images/Jago.jpg" alt="JAGO" onerror="this.style.display='none'">`,
-        "CANNONEER": `<img class="unit-icon" src="images/Eternal Cannoneer.jpg" alt="CANNONEER" onerror="this.style.display='none'">`,
-        "ARIEL": `<img class="unit-icon" src="images/Ariel.jpg" alt="ARIEL" onerror="this.style.display='none'">`,
-        "EPIC HUNTER": `<img class="unit-icon" src="images/Superior Epic Monster Hunter.jpg" alt="EPIC HUNTER" onerror="this.style.display='none'">`,
-        "RIDERS": `<img class="unit-icon" src="images/Quicksand.jpg" alt="QUICKSAND" onerror="this.style.display='none'"> <img class="unit-icon" src="images/Galloper.jpg" alt="GALLOPER" onerror="this.style.display='none'">`,
-        "TROOPS": `<img class="unit-icon" src="images/Highlander.jpg" alt="HIGHLANDER" onerror="this.style.display='none'"> <img class="unit-icon" src="images/Slavic Warrior.jpg" alt="SLAVIC WARRIOR" onerror="this.style.display='none'"> <img class="unit-icon" src="images/Scarface.jpg" alt="SCARFACE" onerror="this.style.display='none'"> <img class="unit-icon" src="images/Pounder.jpg" alt="POUNDER" onerror="this.style.display='none'">`
-      };
-
-      if (mercMap[englishName]) {
-        return mercMap[englishName];
-      }
-
-      const defaultSrc = getImageFileName(englishName);
-      return `<img class="unit-icon" src="${defaultSrc}" alt="${englishName}" onerror="this.style.display='none'">`;
     }
 
     function calculate() {
@@ -1153,7 +1096,6 @@
       }
 
       const t = translations[currentLang];
-      const tEn = translations['en'];
 
       const CASCADE_DEFS = [
         { key: 'g9_ranged', group: 'G9', hp: 16530,  factor: 1,  typeIdx: 8,  isBase: true },
@@ -1198,11 +1140,14 @@
         resultsMap[item.key] = {
           group: item.group,
           type: t.troops[item.typeIdx],
-          engType: tEn.troops[item.typeIdx],
           count: count
         };
       }
 
+      // Optional 17th link: Josephine II. When included, it is calculated from
+      // Lion I's finished stack health using a hardcoded 1.28 multiplier (not the
+      // Conservative/Moderate/Aggressive stacking mode), and its leadership only
+      // counts toward the total when the checkbox is checked.
       const includeJosephine = document.getElementById('includeJosephineCheckbox').checked;
       if (includeJosephine) {
         const josephineHp = 165300;
@@ -1215,7 +1160,6 @@
         resultsMap.josephine_ii = {
           group: 'E9',
           type: t.josephineName,
-          engType: 'JOSEPHINE II',
           count: josephineCount
         };
       }
@@ -1226,54 +1170,57 @@
 
       if (deviceMode === 'pc') {
         troopsData = [
-          { group: resultsMap.corax_2.group, type: resultsMap.corax_2.type, engType: resultsMap.corax_2.engType, count: resultsMap.corax_2.count },
-          { group: resultsMap.lions_2.group, type: resultsMap.lions_2.type, engType: resultsMap.lions_2.engType, count: resultsMap.lions_2.count },
-          { group: resultsMap.lions_1.group, type: resultsMap.lions_1.type, engType: resultsMap.lions_1.engType, count: resultsMap.lions_1.count },
-          { group: resultsMap.corax_1.group, type: resultsMap.corax_1.type, engType: resultsMap.corax_1.engType, count: resultsMap.corax_1.count },
-          ...(includeJosephine ? [{ group: resultsMap.josephine_ii.group, type: resultsMap.josephine_ii.type, engType: resultsMap.josephine_ii.engType, count: resultsMap.josephine_ii.count }] : []),
+          { group: resultsMap.corax_2.group, type: resultsMap.corax_2.type, count: resultsMap.corax_2.count },
+          { group: resultsMap.lions_2.group, type: resultsMap.lions_2.type, count: resultsMap.lions_2.count },
+          { group: resultsMap.lions_1.group, type: resultsMap.lions_1.type, count: resultsMap.lions_1.count },
+          { group: resultsMap.corax_1.group, type: resultsMap.corax_1.type, count: resultsMap.corax_1.count },
+          ...(includeJosephine ? [{ group: resultsMap.josephine_ii.group, type: resultsMap.josephine_ii.type, count: resultsMap.josephine_ii.count }] : []),
           { divider: true },
-          { group: resultsMap.g9_mounted.group, type: resultsMap.g9_mounted.type, engType: resultsMap.g9_mounted.engType, count: resultsMap.g9_mounted.count },
-          { group: resultsMap.s9_mounted.group, type: resultsMap.s9_mounted.type, engType: resultsMap.s9_mounted.engType, count: resultsMap.s9_mounted.count },
-          { group: resultsMap.g8_mounted.group, type: resultsMap.g8_mounted.type, engType: resultsMap.g8_mounted.engType, count: resultsMap.g8_mounted.count },
-          { group: resultsMap.s8_mounted.group, type: resultsMap.s8_mounted.type, engType: resultsMap.s8_mounted.engType, count: resultsMap.s8_mounted.count },
+          { group: resultsMap.g9_mounted.group, type: resultsMap.g9_mounted.type, count: resultsMap.g9_mounted.count },
+          { group: resultsMap.s9_mounted.group, type: resultsMap.s9_mounted.type, count: resultsMap.s9_mounted.count },
+          { group: resultsMap.g8_mounted.group, type: resultsMap.g8_mounted.type, count: resultsMap.g8_mounted.count },
+          { group: resultsMap.s8_mounted.group, type: resultsMap.s8_mounted.type, count: resultsMap.s8_mounted.count },
           { divider: true },
-          { group: resultsMap.g9_ranged.group, type: resultsMap.g9_ranged.type, engType: resultsMap.g9_ranged.engType, count: resultsMap.g9_ranged.count },
-          { group: resultsMap.s9_ranged.group, type: resultsMap.s9_ranged.type, engType: resultsMap.s9_ranged.engType, count: resultsMap.s9_ranged.count },
-          { group: resultsMap.s9_melee.group, type: resultsMap.s9_melee.type, engType: resultsMap.s9_melee.engType, count: resultsMap.s9_melee.count },
-          { group: resultsMap.g9_melee.group, type: resultsMap.g9_melee.type, engType: resultsMap.g9_melee.engType, count: resultsMap.g9_melee.count },
+          { group: resultsMap.g9_ranged.group, type: resultsMap.g9_ranged.type, count: resultsMap.g9_ranged.count },
+          { group: resultsMap.s9_ranged.group, type: resultsMap.s9_ranged.type, count: resultsMap.s9_ranged.count },
+          { group: resultsMap.s9_melee.group, type: resultsMap.s9_melee.type, count: resultsMap.s9_melee.count },
+          { group: resultsMap.g9_melee.group, type: resultsMap.g9_melee.type, count: resultsMap.g9_melee.count },
           { divider: true },
-          { group: resultsMap.g8_melee.group, type: resultsMap.g8_melee.type, engType: resultsMap.g8_melee.engType, count: resultsMap.g8_melee.count },
-          { group: resultsMap.s8_ranged.group, type: resultsMap.s8_ranged.type, engType: resultsMap.s8_ranged.engType, count: resultsMap.s8_ranged.count },
-          { group: resultsMap.s8_melee.group, type: resultsMap.s8_melee.type, engType: resultsMap.s8_melee.engType, count: resultsMap.s8_melee.count },
-          { group: resultsMap.g8_ranged.group, type: resultsMap.g8_ranged.type, engType: resultsMap.g8_ranged.engType, count: resultsMap.g8_ranged.count }
+          { group: resultsMap.g8_melee.group, type: resultsMap.g8_melee.type, count: resultsMap.g8_melee.count },
+          { group: resultsMap.s8_ranged.group, type: resultsMap.s8_ranged.type, count: resultsMap.s8_ranged.count },
+          { group: resultsMap.s8_melee.group, type: resultsMap.s8_melee.type, count: resultsMap.s8_melee.count },
+          { group: resultsMap.g8_ranged.group, type: resultsMap.g8_ranged.type, count: resultsMap.g8_ranged.count }
         ];
       } else {
         troopsData = [
-          { group: resultsMap.corax_2.group, type: resultsMap.corax_2.type, engType: resultsMap.corax_2.engType, count: resultsMap.corax_2.count },
-          { group: resultsMap.lions_2.group, type: resultsMap.lions_2.type, engType: resultsMap.lions_2.engType, count: resultsMap.lions_2.count },
-          { group: resultsMap.corax_1.group, type: resultsMap.corax_1.type, engType: resultsMap.corax_1.engType, count: resultsMap.corax_1.count },
-          { group: resultsMap.lions_1.group, type: resultsMap.lions_1.type, engType: resultsMap.lions_1.engType, count: resultsMap.lions_1.count },
-          ...(includeJosephine ? [{ group: resultsMap.josephine_ii.group, type: resultsMap.josephine_ii.type, engType: resultsMap.josephine_ii.engType, count: resultsMap.josephine_ii.count }] : []),
+          { group: resultsMap.corax_2.group, type: resultsMap.corax_2.type, count: resultsMap.corax_2.count },
+          { group: resultsMap.lions_2.group, type: resultsMap.lions_2.type, count: resultsMap.lions_2.count },
+          { group: resultsMap.corax_1.group, type: resultsMap.corax_1.type, count: resultsMap.corax_1.count },
+          { group: resultsMap.lions_1.group, type: resultsMap.lions_1.type, count: resultsMap.lions_1.count },
+          ...(includeJosephine ? [{ group: resultsMap.josephine_ii.group, type: resultsMap.josephine_ii.type, count: resultsMap.josephine_ii.count }] : []),
           { divider: true },
-          { group: resultsMap.g9_mounted.group, type: resultsMap.g9_mounted.type, engType: resultsMap.g9_mounted.engType, count: resultsMap.g9_mounted.count },
-          { group: resultsMap.s9_mounted.group, type: resultsMap.s9_mounted.type, engType: resultsMap.s9_mounted.engType, count: resultsMap.s9_mounted.count },
-          { group: resultsMap.g8_mounted.group, type: resultsMap.g8_mounted.type, engType: resultsMap.g8_mounted.engType, count: resultsMap.g8_mounted.count },
-          { group: resultsMap.s8_mounted.group, type: resultsMap.s8_mounted.type, engType: resultsMap.s8_mounted.engType, count: resultsMap.s8_mounted.count },
+          { group: resultsMap.g9_mounted.group, type: resultsMap.g9_mounted.type, count: resultsMap.g9_mounted.count },
+          { group: resultsMap.s9_mounted.group, type: resultsMap.s9_mounted.type, count: resultsMap.s9_mounted.count },
+          { group: resultsMap.g8_mounted.group, type: resultsMap.g8_mounted.type, count: resultsMap.g8_mounted.count },
+          { group: resultsMap.s8_mounted.group, type: resultsMap.s8_mounted.type, count: resultsMap.s8_mounted.count },
           { divider: true },
-          { group: resultsMap.g9_ranged.group, type: resultsMap.g9_ranged.type, engType: resultsMap.g9_ranged.engType, count: resultsMap.g9_ranged.count },
-          { group: resultsMap.g9_melee.group, type: resultsMap.g9_melee.type, engType: resultsMap.g9_melee.engType, count: resultsMap.g9_melee.count },
-          { group: resultsMap.s9_ranged.group, type: resultsMap.s9_ranged.type, engType: resultsMap.s9_ranged.engType, count: resultsMap.s9_ranged.count },
-          { group: resultsMap.s9_melee.group, type: resultsMap.s9_melee.type, engType: resultsMap.s9_melee.engType, count: resultsMap.s9_melee.count },
+          { group: resultsMap.g9_ranged.group, type: resultsMap.g9_ranged.type, count: resultsMap.g9_ranged.count },
+          { group: resultsMap.g9_melee.group, type: resultsMap.g9_melee.type, count: resultsMap.g9_melee.count },
+          { group: resultsMap.s9_ranged.group, type: resultsMap.s9_ranged.type, count: resultsMap.s9_ranged.count },
+          { group: resultsMap.s9_melee.group, type: resultsMap.s9_melee.type, count: resultsMap.s9_melee.count },
           { divider: true },
-          { group: resultsMap.g8_ranged.group, type: resultsMap.g8_ranged.type, engType: resultsMap.g8_ranged.engType, count: resultsMap.g8_ranged.count },
-          { group: resultsMap.g8_melee.group, type: resultsMap.g8_melee.type, engType: resultsMap.g8_melee.engType, count: resultsMap.g8_melee.count },
-          { group: resultsMap.s8_ranged.group, type: resultsMap.s8_ranged.type, engType: resultsMap.s8_ranged.engType, count: resultsMap.s8_ranged.count },
-          { group: resultsMap.s8_melee.group, type: resultsMap.s8_melee.type, engType: resultsMap.s8_melee.engType, count: resultsMap.s8_melee.count }
+          { group: resultsMap.g8_ranged.group, type: resultsMap.g8_ranged.type, count: resultsMap.g8_ranged.count },
+          { group: resultsMap.g8_melee.group, type: resultsMap.g8_melee.type, count: resultsMap.g8_melee.count },
+          { group: resultsMap.s8_ranged.group, type: resultsMap.s8_ranged.type, count: resultsMap.s8_ranged.count },
+          { group: resultsMap.s8_melee.group, type: resultsMap.s8_melee.type, count: resultsMap.s8_melee.count }
         ];
       }
 
       const factor = baseInput * 5510;
 
+      // Monster cascade (Sheet2, rows 2-13): same cascade principle as the troop
+      // cascade above, chained off the "Dragons M9" base (M9 Devastator II).
+      // hp = unit health incl. bonus (H column), factor = Dominance (O column).
       const MONSTER_CASCADE_DEFS = [
         { key: 'm9_devastator_ii', tier: 'M9', hp: 55721250, factor: 53, typeIdx: 0,  isBase: true },
         { key: 'm9_kraken_ii',     tier: 'M9', hp: 57626250, factor: 55, typeIdx: 1,  isBase: false },
@@ -1315,7 +1262,6 @@
           monsterResultsMap[item.key] = {
             tier: item.tier,
             name: t.monsterCascade[item.typeIdx],
-            engName: tEn.monsterCascade[item.typeIdx],
             count: count
           };
         }
@@ -1323,6 +1269,7 @@
 
       totalDominanceEl.innerText = Math.floor(totalDominance).toLocaleString();
 
+      // Display order per Stacking!J (grouped M9 -> M8 -> M7, with dividers).
       let monstersData = [];
       if (Object.keys(monsterResultsMap).length > 0) {
         monstersData = [
@@ -1344,15 +1291,15 @@
       }
 
       const mercenariesData = [
-        { name: t.mercenaries[0], engName: tEn.mercenaries[0], val: Math.floor((factor / 690000) * 0.9 * 0.9) },
-        { name: t.mercenaries[1], engName: tEn.mercenaries[1], val: Math.floor((factor / 470000) * 0.9 * 0.9) },
-        { name: t.mercenaries[2], engName: tEn.mercenaries[2], val: Math.floor((factor / 410000) * 0.9 * 0.9) },
-        { name: t.mercenaries[3], engName: tEn.mercenaries[3], val: Math.floor((factor / 220000) * 0.9 * 0.9) },
-        { name: t.mercenaries[4], engName: tEn.mercenaries[4], val: Math.floor((factor / 440000) * 0.9 * 0.9) },
-        { name: t.mercenaries[5], engName: tEn.mercenaries[5], val: Math.round(baseInput * 0.0408) },
-        { name: t.mercenaries[6], engName: tEn.mercenaries[6], val: Math.floor((factor / 25000) * 0.9) },
-        { name: t.mercenaries[7], engName: tEn.mercenaries[7], val: Math.floor((factor / 22000) * 0.9) },
-        { name: t.mercenaries[8], engName: tEn.mercenaries[8], val: Math.floor((factor / 11000) * 0.9) },
+        { name: t.mercenaries[0], val: Math.floor((factor / 690000) * 0.9 * 0.9) },
+        { name: t.mercenaries[1], val: Math.floor((factor / 470000) * 0.9 * 0.9) },
+        { name: t.mercenaries[2], val: Math.floor((factor / 410000) * 0.9 * 0.9) },
+        { name: t.mercenaries[3], val: Math.floor((factor / 220000) * 0.9 * 0.9) },
+        { name: t.mercenaries[4], val: Math.floor((factor / 440000) * 0.9 * 0.9) },
+        { name: t.mercenaries[5], val: Math.round(baseInput * 0.0408) },
+        { name: t.mercenaries[6], val: Math.floor((factor / 25000) * 0.9) },
+        { name: t.mercenaries[7], val: Math.floor((factor / 22000) * 0.9) },
+        { name: t.mercenaries[8], val: Math.floor((factor / 11000) * 0.9) },
       ];
 
       function fmt(v) {
@@ -1362,19 +1309,15 @@
       troopsData.forEach(item => {
         if (item.divider) {
           const tr = document.createElement('tr');
-          tr.innerHTML = `<td colspan="4" style="padding: 4px; background: rgba(0,0,0,0.02);"></td>`;
+          tr.innerHTML = `<td colspan="3" style="padding: 4px; background: rgba(0,0,0,0.02);"></td>`;
           troopsTable.appendChild(tr);
           return;
         }
 
         const badgeClass = `badge-${item.group.toLowerCase()}`;
-        const imgSrc = getImageFileName(item.engType);
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td><span class="badge ${badgeClass}">${item.group}</span></td>
-          <td class="col-icon">
-            <img class="unit-icon" src="${imgSrc}" alt="${item.engType}" onerror="this.style.display='none'">
-          </td>
           <td><strong>${item.type}</strong></td>
           <td class="num-val">${fmt(item.count)}</td>
         `;
@@ -1382,10 +1325,8 @@
       });
 
       mercenariesData.forEach(item => {
-        const imgHtml = getMercenaryImageFileName(item.engName);
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td class="col-icon">${imgHtml}</td>
           <td><strong>${item.name}</strong></td>
           <td class="num-val">${fmt(item.val)}</td>
         `;
@@ -1395,19 +1336,15 @@
       monstersData.forEach(item => {
         if (item.divider) {
           const tr = document.createElement('tr');
-          tr.innerHTML = `<td colspan="4" style="padding: 4px; background: rgba(0,0,0,0.02);"></td>`;
+          tr.innerHTML = `<td colspan="3" style="padding: 4px; background: rgba(0,0,0,0.02);"></td>`;
           monstersTable.appendChild(tr);
           return;
         }
 
         const badgeClass = `badge-${item.tier.toLowerCase()}`;
-        const imgSrc = getMonsterImageFileName(item.engName);
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td><span class="badge ${badgeClass}">${item.tier}</span></td>
-          <td class="col-icon">
-            <img class="unit-icon" src="${imgSrc}" alt="${item.engName}" onerror="this.style.display='none'">
-          </td>
           <td><strong>${item.name}</strong></td>
           <td class="num-val">${fmt(item.count)}</td>
         `;
