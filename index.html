@@ -1057,10 +1057,6 @@
       return Math.round((num + Number.EPSILON) * 100000) / 100000;
     }
 
-    function getImageFileName(englishName) {
-      return `images/${englishName}.png`;
-    }
-
     function getTroopImageFileName(englishName) {
       const troopMap = {
         "CORAX II": "Corax II.png",
@@ -1101,6 +1097,22 @@
         "M9 PHOENIX II": "Fire Phoenix II.png"
       };
       const filename = monsterMap[englishName] || `${englishName}.png`;
+      return `images/${filename}`;
+    }
+
+    function getMercenaryImageFileName(englishName) {
+      const mercenaryMap = {
+        "WYVERN": "Wyvern.png",
+        "WARDEN": "Warden.png",
+        "SALAMANDER": "Salamander.png",
+        "WARREGAL/JAGO": "Birds.png",
+        "CANNONEER": "Cannoneer.png",
+        "ARIEL": "Ariel.png",
+        "EPIC HUNTER": "Epic Hunter.png",
+        "RIDERS": "Riders.png",
+        "TROOPS": "Troops.png"
+      };
+      const filename = mercenaryMap[englishName] || `${englishName}.png`;
       return `images/${filename}`;
     }
 
@@ -1355,7 +1367,7 @@
       });
 
       mercenariesData.forEach(item => {
-        const imgSrc = getImageFileName(item.engName);
+        const imgSrc = getMercenaryImageFileName(item.engName);
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td class="col-icon">
