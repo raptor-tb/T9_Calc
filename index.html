@@ -519,6 +519,9 @@
               <div class="lang-option" onclick="selectLanguage('de', 'Deutsch', 'de')">
                 <img class="flag-icon" src="https://flagcdn.com/w40/de.png" alt="DE Flag"> Deutsch
               </div>
+              <div class="lang-option" onclick="selectLanguage('pt', 'Português', 'pt')">
+                <img class="flag-icon" src="https://flagcdn.com/w40/pt.png" alt="PT Flag"> Português
+              </div>
             </div>
           </div>
         </div>
@@ -727,9 +730,9 @@
         ],
         monsters: ["M9", "M8", "M7"],
         monsterCascade: [
-          "M9 DEVASTATOR II", "M9 KRAKEN II", "M9 TRICKSTER II", "M8 DEVASTATOR I",
-          "M9 PHOENIX II", "M8 KRAKEN I", "M8 TRICKSTER I", "M7 WIND LORD",
-          "M7 COLOSSUS", "M7 TERROR", "M7 BLACK DRAGON", "M8 PHOENIX I"
+          "DEVASTATOR II", "KRAKEN II", "TRICKSTER II", "DEVASTATOR I",
+          "PHOENIX II", "KRAKEN I", "TRICKSTER I", "WIND LORD",
+          "COLOSSUS", "TERROR", "BLACK DRAGON", "PHOENIX I"
         ],
         mercenaries: [
           "WYVERN", "WARDEN", "SALAMANDER", "WARREGAL/JAGO", "CANNONEER",
@@ -779,9 +782,9 @@
         ],
         monsters: ["M9", "M8", "M7"],
         monsterCascade: [
-          "M9 DÉVASTATEUR II", "M9 KRAKEN II", "M9 FILOU II", "M8 DÉVASTATEUR I",
-          "M9 PHÉNIX II", "M8 KRAKEN I", "M8 FILOU I", "M7 SEIGNEUR DU VENT",
-          "M7 COLOSSE", "M7 TERREUR", "M7 DRAGON NOIR", "M8 PHÉNIX I"
+          "DÉVASTATEUR II", "KRAKEN II", "FILOU II", "DÉVASTATEUR I",
+          "PHÉNIX II", "KRAKEN I", "FILOU I", "SEIGNEUR DU VENT",
+          "COLOSSE", "TERREUR", "DRAGON NOIR", "PHÉNIX I"
         ],
         mercenaries: [
           "VOUIVRE", "GARDIEN", "SALAMANDRE", "WARREGAL/JAGO", "CANONNIER",
@@ -831,9 +834,9 @@
         ],
         monsters: ["M9", "M8", "M7"],
         monsterCascade: [
-          "M9 DEVASTATORE II", "M9 KRAKEN II", "M9 FURFANTE II", "M8 DEVASTATORE I",
-          "M9 FENICE II", "M8 KRAKEN I", "M8 FURFANTE I", "M7 SIGNORE DEL VENTO",
-          "M7 COLOSSO", "M7 TERRORE", "M7 DRAGO NERO", "M8 FENICE I"
+          "DEVASTATORE II", "KRAKEN II", "FURFANTE II", "DEVASTATORE I",
+          "FENICE II", "KRAKEN I", "FURFANTE I", "SIGNORE DEL VENTO",
+          "COLOSSO", "TERRORE", "DRAGO NERO", "FENICE I"
         ],
         mercenaries: [
           "VIVERNA", "GUARDIANO", "SALAMANDRA", "WARREGAL/JAGO", "CANNONIERE ETERNO",
@@ -883,9 +886,9 @@
         ],
         monsters: ["M9", "M8", "M7"],
         monsterCascade: [
-          "M9 DEVASTADOR II", "M9 KRAKEN II", "M9 EMBAUCADOR II", "M8 DEVASTADOR I",
-          "M9 FÉNIX II", "M8 KRAKEN I", "M8 EMBAUCADOR I", "M7 SEÑOR DEL VIENTO",
-          "M7 COLOSO", "M7 TERROR", "M7 DRAGÓN NEGRO", "M8 FÉNIX I"
+          "DEVASTADOR II", "KRAKEN II", "EMBAUCADOR II", "DEVASTADOR I",
+          "FÉNIX II", "KRAKEN I", "EMBAUCADOR I", "SEÑOR DEL VIENTO",
+          "COLOSO", "TERROR", "DRAGÓN NEGRO", "FÉNIX I"
         ],
         mercenaries: [
           "GUIVERNO", "CABALLERO", "SALAMANDRA", "WARREGAL/JAGO", "CAÑONERO ETERNO",
@@ -935,13 +938,65 @@
         ],
         monsters: ["M9", "M8", "M7"],
         monsterCascade: [
-          "M9 VERWÜSTER II", "M9 KRAKEN II", "M9 SCHELM II", "M8 VERWÜSTER I",
-          "M9 PHÖNIX II", "M8 KRAKEN I", "M8 SCHELM I", "M7 WINDHERR",
-          "M7 KOLOSS", "M7 SCHRECKEN", "M7 SCHWARZER DRACHE", "M8 PHÖNIX I"
+          "VERWÜSTER II", "KRAKEN II", "SCHELM II", "VERWÜSTER I",
+          "PHÖNIX II", "KRAKEN I", "SCHELM I", "WINDHERR",
+          "KOLOSS", "SCHRECKEN", "SCHWARZER DRACHE", "PHÖNIX I"
         ],
         mercenaries: [
           "LINDWURM", "WÄCHTER", "SALAMANDER", "WARREGAL/JAGO", "KANONIER",
           "ARIEL", "EPISCHER JÄGER", "REITER", "TRUPPEN"
+        ]
+      },
+      pt: {
+        modalTitle: "Instruções",
+        step1: "Encontre a sua liderança e domínio",
+        step2Title: "Selecione o layout do dispositivo que está a usar (PC ou Telemóvel)",
+        step2Sub: "Cada dispositivo tem uma ordem diferente para mostrar as tropas. Esta opção ajuda a corresponder a essa ordem, facilitando a introdução dos números corretos.",
+        step3Title: "Selecione o modo de acumulação",
+        step3a: "<strong>Conservador</strong> - garante a ordem de ataque correta",
+        step3b: "<strong>Agressivo</strong> - permite levar mais tropas com a mesma liderança, mas um problema mínimo no bónus de saúde (pesquisa em falta, gema ou artefacto errado) pode alterar a ordem de ataque",
+        step3c: "<strong>Moderado</strong> é o meio-termo",
+        step3Sub: "Experimente e veja o que funciona melhor para si",
+        step4: "Selecione se deseja adicionar Josefina II à sua acumulação como pilha de sacrifício",
+        step5: "Ajuste o 'valor base' até que a liderança total e o domínio no calculador correspondam aos seus valores reais de liderança e domínio.",
+        step6: "Divirta-se! :)",
+        title: "Calculadora de Acumulação T9",
+        subtitle: "Calcula todos os tipos de tropas, monstros e mercenários com base no valor inserido",
+        instruction: "Altere o 'valor base' até corresponder à sua Liderança Total e Domínio",
+        deviceLabel: "Layout do Dispositivo",
+        optPhone: "Telemóvel",
+        optPc: "PC",
+        stackingLabel: "Modo de Acumulação",
+        optConservative: "Conservador",
+        optModerate: "Moderado",
+        optAggressive: "Agressivo",
+        baseLabel: "Valor Base das Tropas de Prata (Unidades à Distância G9)",
+        leadershipLabel: "Liderança Total Necessária",
+        monsterBaseLabel: "Valor Base dos Monstros (Dragões M9)",
+        dominanceLabel: "Domínio Total Necessário",
+        josephineLabel: "Incluir Josefina II",
+        josephineName: "JOSEFINA II",
+        mercenariesTitle: "Mercenários",
+        mercenariesNote: "Número máximo de mercenários, ajuste de acordo com a disponibilidade",
+        monstersTitle: "Monstros",
+        troopsTitle: "Tropas de Prata",
+        colUnitName: "Nome da Unidade",
+        colCount: "Quantidade",
+        troops: [
+          "CORAX II", "LEÃO REAL II", "CORAX I", "LEÃO REAL I",
+          "GOLPEADOR II", "JUBA BRANCA II", "GOLPEADOR I", "JUBA BRANCA I",
+          "PURIFICADOR II", "PUNIDOR II", "LEGITIMISTA II", "DUELISTA II",
+          "PURIFICADOR I", "PUNIDOR I", "LEGITIMISTA I", "DUELISTA I"
+        ],
+        monsters: ["M9", "M8", "M7"],
+        monsterCascade: [
+          "DEVASTADOR II", "KRAKEN II", "TRAPACEIRO II", "DEVASTADOR I",
+          "FÉNIX II", "KRAKEN I", "TRAPACEIRO I", "SENHOR DO VENTO",
+          "COLOSO", "TERROR", "DRAGÃO NEGRO", "FÉNIX I"
+        ],
+        mercenaries: [
+          "SERPENTE ALADA", "GUARDIÃO", "SALAMANDRA", "WARREGAL/JAGO", "CANHONEIRO",
+          "ARIEL", "CAÇADOR ÉPICO", "CAVALEIROS", "TROPAS"
         ]
       }
     };
@@ -1083,18 +1138,18 @@
 
     function getMonsterImageFileName(englishName) {
       const monsterMap = {
-        "M7 WIND LORD": "Wind Lord.png",
-        "M7 TERROR": "Ancient Terror.png",
-        "M7 BLACK DRAGON": "Black Dragon.png",
-        "M7 COLOSSUS": "Destructive Colossus.png",
-        "M8 DEVASTATOR I": "Devastator I.png",
-        "M9 DEVASTATOR II": "Devastator II.png",
-        "M8 KRAKEN I": "Kraken I.png",
-        "M9 KRAKEN II": "Kraken II.png",
-        "M8 TRICKSTER I": "Trickster I.png",
-        "M9 TRICKSTER II": "Trickster II.png",
-        "M8 PHOENIX I": "Fire Phoenix I.png",
-        "M9 PHOENIX II": "Fire Phoenix II.png"
+        "WIND LORD": "Wind Lord.png",
+        "TERROR": "Ancient Terror.png",
+        "BLACK DRAGON": "Black Dragon.png",
+        "COLOSSUS": "Destructive Colossus.png",
+        "DEVASTATOR I": "Devastator I.png",
+        "DEVASTATOR II": "Devastator II.png",
+        "KRAKEN I": "Kraken I.png",
+        "KRAKEN II": "Kraken II.png",
+        "TRICKSTER I": "Trickster I.png",
+        "TRICKSTER II": "Trickster II.png",
+        "PHOENIX I": "Fire Phoenix I.png",
+        "PHOENIX II": "Fire Phoenix II.png"
       };
       const filename = monsterMap[englishName] || `${englishName}.png`;
       return `images/${filename}`;
