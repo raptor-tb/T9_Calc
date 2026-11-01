@@ -345,6 +345,26 @@
       margin-top: 6px;
     }
 
+    .monster-max-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin: 12px 0 4px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .monster-max-row strong {
+      color: var(--text);
+    }
+
+    .over-limit {
+      color: #dc2626;
+      font-weight: 700;
+    }
+
     .section-note {
       font-size: 0.75rem;
       color: var(--text-muted);
@@ -561,6 +581,8 @@
             <option value="0.005" id="optConservative">Conservative</option>
             <option value="0.0035" id="optModerate">Moderate</option>
             <option value="0.002" id="optAggressive">Aggressive</option>
+            <option value="0.001" id="optInsane">Insane</option>
+            <option value="0.0005" id="optRisk">Use at your own Risk</option>
           </select>
         </div>
 
@@ -605,6 +627,11 @@
           onpaste="handlePaste(event)"
         >
         <div class="monster-warning" id="monsterWarning">Your selection of Monsters can cause issues to the stacking order</div>
+      </div>
+      <div class="monster-max-row">
+        <span id="maxM9">M9 Max: <strong>0</strong></span>
+        <span id="maxM8">M8 Max: <strong>0</strong></span>
+        <span id="maxM7">M7 Max: <strong>0</strong></span>
       </div>
       <div class="stat-row">
         <span class="stat-label" id="txtDominanceLabel">Total Dominance Required</span>
@@ -719,11 +746,14 @@
         optConservative: "Conservative",
         optModerate: "Moderate",
         optAggressive: "Aggressive",
+        optInsane: "Insane",
+        optRisk: "Use at your own Risk",
         baseLabel: "Silver Troops Base Value (Ranged Units G9)",
         leadershipLabel: "Total Leadership Required",
         monsterBaseLabel: "Monster Base Value (Dragons M9)",
         dominanceLabel: "Total Dominance Required",
         monsterWarning: "Your selection of Monsters can cause issues to the stacking order",
+        monsterMaxLabel: "Max",
         josephineLabel: "Include Josephines",
         josephineIName: "JOSEPHINE I",
         josephineName: "JOSEPHINE II",
@@ -773,11 +803,14 @@
         optConservative: "Conservateur",
         optModerate: "Modéré",
         optAggressive: "Agressif",
+        optInsane: "Insensé",
+        optRisk: "À vos risques et périls",
         baseLabel: "Valeur de Base des Troupes d'Argent (Unités à Distance G9)",
         leadershipLabel: "Commandement Total Requis",
         monsterBaseLabel: "Valeur de Base des Monstres (Dragons M9)",
         dominanceLabel: "Dominance Totale Requise",
         monsterWarning: "Votre sélection de Monstres peut causer des problèmes dans l'ordre d'empilement",
+        monsterMaxLabel: "Max",
         josephineLabel: "Inclure les Joséphines",
         josephineIName: "JOSÉPHINE I",
         josephineName: "JOSÉPHINE II",
@@ -827,11 +860,14 @@
         optConservative: "Conservativo",
         optModerate: "Moderato",
         optAggressive: "Aggressivo",
+        optInsane: "Folle",
+        optRisk: "A tuo rischio e pericolo",
         baseLabel: "Valore Base delle Truppe d'Argento (Arcieri G9)",
         leadershipLabel: "Leadership Totale Richiesta",
         monsterBaseLabel: "Valore Base dei Mostri (Draghi M9)",
         dominanceLabel: "Dominanza Totale Richiesta",
         monsterWarning: "La tua selezione di Mostri può causare problemi all'ordine di accatastamento",
+        monsterMaxLabel: "Max",
         josephineLabel: "Includi le Josephine",
         josephineIName: "JOSEPHINE I",
         josephineName: "JOSEPHINE II",
@@ -881,11 +917,14 @@
         optConservative: "Conservador",
         optModerate: "Moderato",
         optAggressive: "Agresivo",
+        optInsane: "Demencial",
+        optRisk: "Úsalo bajo tu propio riesgo",
         baseLabel: "Valor Base de las Tropas de Plata (Unidades a Distancia G9)",
         leadershipLabel: "Liderazgo Total Requerido",
         monsterBaseLabel: "Valor Base de los Monstruos (Dragones M9)",
         dominanceLabel: "Dominio Total Requerido",
         monsterWarning: "Tu selección de Monstruos puede causar problemas en el orden de apilamiento",
+        monsterMaxLabel: "Máx",
         josephineLabel: "Incluir las Josephine",
         josephineIName: "JOSEPHINE I",
         josephineName: "JOSEPHINE II",
@@ -935,11 +974,14 @@
         optConservative: "Konservativ",
         optModerate: "Moderat",
         optAggressive: "Aggressiv",
+        optInsane: "Wahnsinn",
+        optRisk: "Auf eigene Gefahr",
         baseLabel: "Basiswert der Silbertruppen (Fernkampfeinheiten G9)",
         leadershipLabel: "Erforderliche Gesamtführung",
         monsterBaseLabel: "Basiswert der Monster (Drachen M9)",
         dominanceLabel: "Erforderliche Gesamtdominanz",
         monsterWarning: "Deine Auswahl an Monstern kann Probleme bei der Stapelreihenfolge verursachen",
+        monsterMaxLabel: "Max",
         josephineLabel: "Josephines einbeziehen",
         josephineIName: "JOSEPHINE I",
         josephineName: "JOSEPHINE II",
@@ -989,11 +1031,14 @@
         optConservative: "Conservador",
         optModerate: "Moderado",
         optAggressive: "Agressivo",
+        optInsane: "Insano",
+        optRisk: "Use por sua conta e risco",
         baseLabel: "Valor Base das Tropas de Prata (Unidades à Distância G9)",
         leadershipLabel: "Liderança Total Necessária",
         monsterBaseLabel: "Valor Base dos Monstros (Dragões M9)",
         dominanceLabel: "Domínio Total Necessário",
         monsterWarning: "A sua seleção de Monstros pode causar problemas na ordem de acumulação",
+        monsterMaxLabel: "Máx",
         josephineLabel: "Incluir Josefinas",
         josephineIName: "JOSEFINA I",
         josephineName: "JOSEFINA II",
@@ -1112,6 +1157,8 @@
       document.getElementById('optConservative').innerText = t.optConservative;
       document.getElementById('optModerate').innerText = t.optModerate;
       document.getElementById('optAggressive').innerText = t.optAggressive;
+      document.getElementById('optInsane').innerText = t.optInsane;
+      document.getElementById('optRisk').innerText = t.optRisk;
       document.getElementById('txtBaseLabel').innerText = t.baseLabel;
       document.getElementById('txtLeadershipLabel').innerText = t.leadershipLabel;
       document.getElementById('txtMonsterBaseLabel').innerText = t.monsterBaseLabel;
@@ -1194,6 +1241,14 @@
       return `images/${filename}`;
     }
 
+    function renderMonsterMax(max) {
+      const lbl = translations[currentLang].monsterMaxLabel;
+      ['M9', 'M8', 'M7'].forEach(tier => {
+        const val = max ? max[tier].toLocaleString() : '0';
+        document.getElementById('max' + tier).innerHTML = `${tier} ${lbl}: <strong>${val}</strong>`;
+      });
+    }
+
     function calculate() {
       const rawVal = document.getElementById('baseInput').value;
       const baseInput = parseFloat(rawVal);
@@ -1215,6 +1270,7 @@
       if (isNaN(baseInput) || baseInput <= 0) {
         totalLeadershipEl.innerText = '0';
         document.getElementById('monsterWarning').style.display = 'none';
+        renderMonsterMax(null);
         return;
       }
 
@@ -1336,10 +1392,10 @@
 
       const factor = baseInput * 5510;
 
-      // Max M9 that can be stacked given the troop base; above this the stacking order may break
-      const maxM9 = factor / 1212000;
-      document.getElementById('monsterWarning').style.display =
-        (!isNaN(monsterBaseInput) && monsterBaseInput > maxM9) ? 'block' : 'none';
+      // Max monsters per tier that can be stacked given the troop base; above this the stacking order may break
+      // Max values are rounded UP to a whole number; a monster is only over when it exceeds that by 1 or more
+      const monsterMax = { M9: Math.ceil(factor / 1212000), M8: Math.ceil(factor / 670000), M7: Math.ceil(factor / 310000) };
+      renderMonsterMax(monsterMax);
 
       const MONSTER_CASCADE_DEFS = [
         { key: 'm9_devastator_ii', tier: 'M9', hp: 55721250, factor: 53, typeIdx: 0,  isBase: true },
@@ -1388,6 +1444,10 @@
           };
         }
       }
+
+      // Warn if ANY monster count exceeds its tier's max
+      const monsterOverLimit = Object.values(monsterResultsMap).some(m => m.count > monsterMax[m.tier]);
+      document.getElementById('monsterWarning').style.display = monsterOverLimit ? 'block' : 'none';
 
       totalDominanceEl.innerText = Math.floor(totalDominance).toLocaleString();
 
@@ -1468,6 +1528,10 @@
           return;
         }
 
+        const over = item.count - monsterMax[item.tier];
+        const countHtml = over > 0
+          ? `<span class="over-limit">${fmt(item.count)} (+${fmt(over)})</span>`
+          : fmt(item.count);
         const imgSrc = getMonsterImageFileName(item.engName);
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -1475,7 +1539,7 @@
             <img class="unit-icon" src="${imgSrc}" alt="${item.engName}" onerror="this.style.display='none'">
           </td>
           <td><strong>${item.name}</strong></td>
-          <td class="num-val">${fmt(item.count)}</td>
+          <td class="num-val">${countHtml}</td>
         `;
         monstersTable.appendChild(tr);
       });
