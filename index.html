@@ -337,6 +337,14 @@
       color: var(--text);
     }
 
+    .monster-warning {
+      display: none;
+      color: #dc2626;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: 6px;
+    }
+
     .section-note {
       font-size: 0.75rem;
       color: var(--text-muted);
@@ -558,7 +566,7 @@
 
         <div class="checkbox-group">
           <input type="checkbox" id="includeJosephineCheckbox" onchange="calculate()">
-          <label for="includeJosephineCheckbox" id="txtJosephineLabel">Include Josephine II</label>
+          <label for="includeJosephineCheckbox" id="txtJosephineLabel">Include Josephines</label>
         </div>
       </div>
     </header>
@@ -596,6 +604,7 @@
           oninput="handleInput(event)"
           onpaste="handlePaste(event)"
         >
+        <div class="monster-warning" id="monsterWarning">Your selection of Monsters can cause issues to the stacking order</div>
       </div>
       <div class="stat-row">
         <span class="stat-label" id="txtDominanceLabel">Total Dominance Required</span>
@@ -675,7 +684,7 @@
             </ul>
             <small style="color: var(--text-muted);" id="txtStep3Sub">Experiment and see what works for you</small>
           </li>
-          <li id="txtStep4">Select if you want to add Josephine II in your stacking as your sacrificial stack</li>
+          <li id="txtStep4">Select if you want to add Josephine I and II in your stacking as your sacrificial stacks</li>
           <li id="txtStep5">Adjust the 'base value' until the total leadership and dominance in the calculator matches your leadership and dominance actual values.</li>
           <li id="txtStep6">Have fun 🙂</li>
         </ol>
@@ -697,7 +706,7 @@
         step3b: "<strong>Aggressive</strong> - allows to carry more troops with the same leadership but even a minor problem with the health bonus (missing research, wrong gem or artifact) can mess up the order of attack",
         step3c: "<strong>Moderate</strong> is the middle ground",
         step3Sub: "Experiment and see what works for you",
-        step4: "Select if you want to add Josephine II in your stacking as your sacrificial stack",
+        step4: "Select if you want to add Josephine I and II in your stacking as your sacrificial stacks",
         step5: "Adjust the 'base value' until the total leadership and dominance in the calculator matches your leadership and dominance actual values.",
         step6: "Have fun 🙂",
         title: "T9 Stacking Calculator",
@@ -714,7 +723,9 @@
         leadershipLabel: "Total Leadership Required",
         monsterBaseLabel: "Monster Base Value (Dragons M9)",
         dominanceLabel: "Total Dominance Required",
-        josephineLabel: "Include Josephine II",
+        monsterWarning: "Your selection of Monsters can cause issues to the stacking order",
+        josephineLabel: "Include Josephines",
+        josephineIName: "JOSEPHINE I",
         josephineName: "JOSEPHINE II",
         mercenariesTitle: "Mercenaries",
         mercenariesNote: "Max number of mercenaries, adjust per availability",
@@ -749,7 +760,7 @@
         step3b: "<strong>Agressif</strong> - permet de transporter plus de troupes avec le même commandement, mais le moindre problème de bonus de santé (recherche manquante, mauvaise gemme ou artefact) peut perturber l'ordre d'attaque",
         step3c: "<strong>Modéré</strong> est le juste milieu",
         step3Sub: "Expérimentez et voyez ce qui fonctionne pour vous",
-        step4: "Sélectionnez si vous souhaitez ajouter Joséphine II à votre pile en tant que pile sacrificielle",
+        step4: "Sélectionnez si vous souhaitez ajouter Joséphine I et II à votre pile en tant que piles sacrificielles",
         step5: "Ajustez la 'valeur de base' jusqu'à ce que le commandement total et la dominance dans le calculateur correspondent à vos valeurs réelles de commandement et de dominance.",
         step6: "Amusez-vous bien 🙂",
         title: "Calculateur d'Empilement T9",
@@ -766,7 +777,9 @@
         leadershipLabel: "Commandement Total Requis",
         monsterBaseLabel: "Valeur de Base des Monstres (Dragons M9)",
         dominanceLabel: "Dominance Totale Requise",
-        josephineLabel: "Inclure Joséphine II",
+        monsterWarning: "Votre sélection de Monstres peut causer des problèmes dans l'ordre d'empilement",
+        josephineLabel: "Inclure les Joséphines",
+        josephineIName: "JOSÉPHINE I",
         josephineName: "JOSÉPHINE II",
         mercenariesTitle: "Mercenaires",
         mercenariesNote: "Nombre maximal de mercenaires, ajustez selon la disponibilité",
@@ -801,7 +814,7 @@
         step3b: "<strong>Aggressivo</strong> - permette di trasportare più truppe a parità di leadership, ma anche un minimo problema con il bonus salute (ricerca mancante, gemma o artefatto errati) può rovinare l'ordine di attacco",
         step3c: "<strong>Moderato</strong> è la via di mezzo",
         step3Sub: "Sperimenta e vedi cosa funziona meglio per te",
-        step4: "Seleziona se vuoi aggiungere Josephine II al tuo stack come stack sacrificale",
+        step4: "Seleziona se vuoi aggiungere Josephine I e II al tuo stack come stack sacrificali",
         step5: "Regola il 'valore base' finché la leadership totale e la dominanza nel calcolatore non corrispondono ai tuoi valori reali di leadership e dominanza.",
         step6: "Buon divertimento 🙂",
         title: "Calcolatore Stacking T9",
@@ -818,7 +831,9 @@
         leadershipLabel: "Leadership Totale Richiesta",
         monsterBaseLabel: "Valore Base dei Mostri (Draghi M9)",
         dominanceLabel: "Dominanza Totale Richiesta",
-        josephineLabel: "Includi Josephine II",
+        monsterWarning: "La tua selezione di Mostri può causare problemi all'ordine di accatastamento",
+        josephineLabel: "Includi le Josephine",
+        josephineIName: "JOSEPHINE I",
         josephineName: "JOSEPHINE II",
         mercenariesTitle: "Mercenari",
         mercenariesNote: "Numero massimo di mercenari, regola in base alla disponibilità",
@@ -853,7 +868,7 @@
         step3b: "<strong>Agresivo</strong> - permite llevar más tropas con el mismo liderazgo, pero un problema menor de bonificación de salud (investigación faltante, gema o artefacto incorrecto) puede arruinar el orden de ataque",
         step3c: "<strong>Moderado</strong> es el punto medio",
         step3Sub: "Experimenta y mira qué te funciona",
-        step4: "Selecciona si quieres añadir Josephine II a tu pila como pila sacrificial",
+        step4: "Selecciona si quieres añadir Josephine I y II a tu pila como pilas sacrificiales",
         step5: "Ajusta el 'valor base' hasta que el liderazgo total y el dominio en la calculadora coincidan con tus valores reales de liderazgo y dominio.",
         step6: "¡Que te diviertas! 🙂",
         title: "Calculadora de Stacking T9",
@@ -870,7 +885,9 @@
         leadershipLabel: "Liderazgo Total Requerido",
         monsterBaseLabel: "Valor Base de los Monstruos (Dragones M9)",
         dominanceLabel: "Dominio Total Requerido",
-        josephineLabel: "Incluir Josephine II",
+        monsterWarning: "Tu selección de Monstruos puede causar problemas en el orden de apilamiento",
+        josephineLabel: "Incluir las Josephine",
+        josephineIName: "JOSEPHINE I",
         josephineName: "JOSEPHINE II",
         mercenariesTitle: "Mercenarios",
         mercenariesNote: "Número máximo de mercenarios, ajustar según disponibilidad",
@@ -905,7 +922,7 @@
         step3b: "<strong>Aggressiv</strong> - erlaubt mehr Truppen mit derselben Führung, aber kleine Abweichungen beim Gesundheitsbonus (fehlende Forschung, falscher Edelstein oder Artefakt) können die Angriffsreihenfolge stören",
         step3c: "<strong>Moderat</strong> ist der Mittelweg",
         step3Sub: "Experimentieren Sie und sehen Sie, was für Sie funktioniert",
-        step4: "Wähle, ob du Josephine II als Opferstapel in deinen Stapel aufnehmen möchtest",
+        step4: "Wähle, ob du Josephine I und II als Opferstapel in deinen Stapel aufnehmen möchtest",
         step5: "Passe den 'Basiswert' an, bis die Gesamtführung und Dominanz im Rechner deinen tatsächlichen Werten für Führung und Dominanz entsprechen.",
         step6: "Viel Spaß! 🙂",
         title: "T9 Stacking Rechner",
@@ -922,7 +939,9 @@
         leadershipLabel: "Erforderliche Gesamtführung",
         monsterBaseLabel: "Basiswert der Monster (Drachen M9)",
         dominanceLabel: "Erforderliche Gesamtdominanz",
-        josephineLabel: "Josephine II einbeziehen",
+        monsterWarning: "Deine Auswahl an Monstern kann Probleme bei der Stapelreihenfolge verursachen",
+        josephineLabel: "Josephines einbeziehen",
+        josephineIName: "JOSEPHINE I",
         josephineName: "JOSEPHINE II",
         mercenariesTitle: "Mercenaries",
         mercenariesNote: "Maximale Anzahl an Söldnern, je nach Verfügbarkeit anpassen",
@@ -957,7 +976,7 @@
         step3b: "<strong>Agressivo</strong> - permite levar mais tropas com a mesma liderança, mas um problema mínimo no bónus de saúde (pesquisa em falta, gema ou artefacto errado) pode alterar a ordem de ataque",
         step3c: "<strong>Moderado</strong> é o meio-termo",
         step3Sub: "Experimente e veja o que funciona melhor para si",
-        step4: "Selecione se deseja adicionar Josefina II à sua acumulação como pilha de sacrifício",
+        step4: "Selecione se deseja adicionar Josefina I e II à sua acumulação como pilhas de sacrifício",
         step5: "Ajuste o 'valor base' até que a liderança total e o domínio no calculador correspondam aos seus valores reais de liderança e domínio.",
         step6: "Divirta-se! 🙂",
         title: "Calculadora de Acumulação T9",
@@ -974,7 +993,9 @@
         leadershipLabel: "Liderança Total Necessária",
         monsterBaseLabel: "Valor Base dos Monstros (Dragões M9)",
         dominanceLabel: "Domínio Total Necessário",
-        josephineLabel: "Incluir Josefina II",
+        monsterWarning: "A sua seleção de Monstros pode causar problemas na ordem de acumulação",
+        josephineLabel: "Incluir Josefinas",
+        josephineIName: "JOSEFINA I",
         josephineName: "JOSEFINA II",
         mercenariesTitle: "Mercenários",
         mercenariesNote: "Número máximo de mercenários, ajuste de acordo com a disponibilidade",
@@ -1095,6 +1116,7 @@
       document.getElementById('txtLeadershipLabel').innerText = t.leadershipLabel;
       document.getElementById('txtMonsterBaseLabel').innerText = t.monsterBaseLabel;
       document.getElementById('txtDominanceLabel').innerText = t.dominanceLabel;
+      document.getElementById('monsterWarning').innerText = t.monsterWarning;
       document.getElementById('txtJosephineLabel').innerText = t.josephineLabel;
       document.getElementById('txtMercenariesTitle').innerText = t.mercenariesTitle;
       document.getElementById('txtMercenariesNote').innerText = t.mercenariesNote;
@@ -1130,7 +1152,8 @@
         "PUNISHER I": "Punisher I.png",
         "LEGITIMIST I": "Legitimist I.png",
         "DUELIST I": "Duelist I.png",
-        "JOSEPHINE II": "Josephine II.png"
+        "JOSEPHINE II": "Josephine II.png",
+        "JOSEPHINE I": "Josephine I.png"
       };
       const filename = troopMap[englishName] || `${englishName}.png`;
       return `images/${filename}`;
@@ -1191,6 +1214,7 @@
 
       if (isNaN(baseInput) || baseInput <= 0) {
         totalLeadershipEl.innerText = '0';
+        document.getElementById('monsterWarning').style.display = 'none';
         return;
       }
 
@@ -1249,7 +1273,7 @@
       if (includeJosephine) {
         const josephineHp = 165300;
         const josephineFactor = 10;
-        const josephineCount = Math.round(excelRound((previousStackHealth * 1.19) / josephineHp));
+        const josephineCount = Math.round(excelRound((previousStackHealth * (1 + stackingMode + 0.17)) / josephineHp));
         const josephineLeadership = josephineCount * josephineFactor;
 
         totalLeadership += josephineLeadership;
@@ -1260,61 +1284,62 @@
           engType: 'JOSEPHINE II',
           count: josephineCount
         };
+
+        // Josephine I: chained off Josephine II's stack health, using the selected stacking mode (Data!C2)
+        const josephineIHp = 91800;
+        const josephineIFactor = 10;
+        const josephineIIStackHealth = josephineCount * josephineHp;
+        const josephineICount = Math.round(excelRound((josephineIIStackHealth * (1 + stackingMode)) / josephineIHp));
+
+        totalLeadership += josephineICount * josephineIFactor;
+
+        resultsMap.josephine_i = {
+          group: 'E8',
+          type: t.josephineIName,
+          engType: 'JOSEPHINE I',
+          count: josephineICount
+        };
       }
 
       totalLeadershipEl.innerText = Math.floor(totalLeadership).toLocaleString();
+
+      const mk = k => ({ group: resultsMap[k].group, type: resultsMap[k].type, engType: resultsMap[k].engType, count: resultsMap[k].count });
+      const DIV = { divider: true };
+      // Josephines get their own block (with divider) only when included
+      const josephineBlock = includeJosephine ? [DIV, mk('josephine_ii'), mk('josephine_i')] : [];
 
       let troopsData = [];
 
       if (deviceMode === 'pc') {
         troopsData = [
-          { group: resultsMap.corax_2.group, type: resultsMap.corax_2.type, engType: resultsMap.corax_2.engType, count: resultsMap.corax_2.count },
-          { group: resultsMap.lions_2.group, type: resultsMap.lions_2.type, engType: resultsMap.lions_2.engType, count: resultsMap.lions_2.count },
-          { group: resultsMap.lions_1.group, type: resultsMap.lions_1.type, engType: resultsMap.lions_1.engType, count: resultsMap.lions_1.count },
-          { group: resultsMap.corax_1.group, type: resultsMap.corax_1.type, engType: resultsMap.corax_1.engType, count: resultsMap.corax_1.count },
-          ...(includeJosephine ? [{ group: resultsMap.josephine_ii.group, type: resultsMap.josephine_ii.type, engType: resultsMap.josephine_ii.engType, count: resultsMap.josephine_ii.count }] : []),
-          { divider: true },
-          { group: resultsMap.g9_mounted.group, type: resultsMap.g9_mounted.type, engType: resultsMap.g9_mounted.engType, count: resultsMap.g9_mounted.count },
-          { group: resultsMap.s9_mounted.group, type: resultsMap.s9_mounted.type, engType: resultsMap.s9_mounted.engType, count: resultsMap.s9_mounted.count },
-          { group: resultsMap.g8_mounted.group, type: resultsMap.g8_mounted.type, engType: resultsMap.g8_mounted.engType, count: resultsMap.g8_mounted.count },
-          { group: resultsMap.s8_mounted.group, type: resultsMap.s8_mounted.type, engType: resultsMap.s8_mounted.engType, count: resultsMap.s8_mounted.count },
-          { divider: true },
-          { group: resultsMap.g9_ranged.group, type: resultsMap.g9_ranged.type, engType: resultsMap.g9_ranged.engType, count: resultsMap.g9_ranged.count },
-          { group: resultsMap.s9_ranged.group, type: resultsMap.s9_ranged.type, engType: resultsMap.s9_ranged.engType, count: resultsMap.s9_ranged.count },
-          { group: resultsMap.s9_melee.group, type: resultsMap.s9_melee.type, engType: resultsMap.s9_melee.engType, count: resultsMap.s9_melee.count },
-          { group: resultsMap.g9_melee.group, type: resultsMap.g9_melee.type, engType: resultsMap.g9_melee.engType, count: resultsMap.g9_melee.count },
-          { divider: true },
-          { group: resultsMap.g8_melee.group, type: resultsMap.g8_melee.type, engType: resultsMap.g8_melee.engType, count: resultsMap.g8_melee.count },
-          { group: resultsMap.s8_ranged.group, type: resultsMap.s8_ranged.type, engType: resultsMap.s8_ranged.engType, count: resultsMap.s8_ranged.count },
-          { group: resultsMap.s8_melee.group, type: resultsMap.s8_melee.type, engType: resultsMap.s8_melee.engType, count: resultsMap.s8_melee.count },
-          { group: resultsMap.g8_ranged.group, type: resultsMap.g8_ranged.type, engType: resultsMap.g8_ranged.engType, count: resultsMap.g8_ranged.count }
+          mk('lions_2'), mk('corax_2'), mk('corax_1'), mk('lions_1'),
+          ...josephineBlock,
+          DIV,
+          mk('g9_mounted'), mk('s9_mounted'), mk('g8_mounted'), mk('s8_mounted'),
+          DIV,
+          mk('g9_ranged'), mk('g9_melee'), mk('s9_ranged'), mk('s9_melee'),
+          DIV,
+          mk('s8_ranged'), mk('g8_melee'), mk('s8_melee'), mk('g8_ranged')
         ];
       } else {
         troopsData = [
-          { group: resultsMap.corax_2.group, type: resultsMap.corax_2.type, engType: resultsMap.corax_2.engType, count: resultsMap.corax_2.count },
-          { group: resultsMap.lions_2.group, type: resultsMap.lions_2.type, engType: resultsMap.lions_2.engType, count: resultsMap.lions_2.count },
-          { group: resultsMap.corax_1.group, type: resultsMap.corax_1.type, engType: resultsMap.corax_1.engType, count: resultsMap.corax_1.count },
-          { group: resultsMap.lions_1.group, type: resultsMap.lions_1.type, engType: resultsMap.lions_1.engType, count: resultsMap.lions_1.count },
-          ...(includeJosephine ? [{ group: resultsMap.josephine_ii.group, type: resultsMap.josephine_ii.type, engType: resultsMap.josephine_ii.engType, count: resultsMap.josephine_ii.count }] : []),
-          { divider: true },
-          { group: resultsMap.g9_mounted.group, type: resultsMap.g9_mounted.type, engType: resultsMap.g9_mounted.engType, count: resultsMap.g9_mounted.count },
-          { group: resultsMap.s9_mounted.group, type: resultsMap.s9_mounted.type, engType: resultsMap.s9_mounted.engType, count: resultsMap.s9_mounted.count },
-          { group: resultsMap.g8_mounted.group, type: resultsMap.g8_mounted.type, engType: resultsMap.g8_mounted.engType, count: resultsMap.g8_mounted.count },
-          { group: resultsMap.s8_mounted.group, type: resultsMap.s8_mounted.type, engType: resultsMap.s8_mounted.engType, count: resultsMap.s8_mounted.count },
-          { divider: true },
-          { group: resultsMap.g9_ranged.group, type: resultsMap.g9_ranged.type, engType: resultsMap.g9_ranged.engType, count: resultsMap.g9_ranged.count },
-          { group: resultsMap.g9_melee.group, type: resultsMap.g9_melee.type, engType: resultsMap.g9_melee.engType, count: resultsMap.g9_melee.count },
-          { group: resultsMap.s9_ranged.group, type: resultsMap.s9_ranged.type, engType: resultsMap.s9_ranged.engType, count: resultsMap.s9_ranged.count },
-          { group: resultsMap.s9_melee.group, type: resultsMap.s9_melee.type, engType: resultsMap.s9_melee.engType, count: resultsMap.s9_melee.count },
-          { divider: true },
-          { group: resultsMap.g8_ranged.group, type: resultsMap.g8_ranged.type, engType: resultsMap.g8_ranged.engType, count: resultsMap.g8_ranged.count },
-          { group: resultsMap.g8_melee.group, type: resultsMap.g8_melee.type, engType: resultsMap.g8_melee.engType, count: resultsMap.g8_melee.count },
-          { group: resultsMap.s8_ranged.group, type: resultsMap.s8_ranged.type, engType: resultsMap.s8_ranged.engType, count: resultsMap.s8_ranged.count },
-          { group: resultsMap.s8_melee.group, type: resultsMap.s8_melee.type, engType: resultsMap.s8_melee.engType, count: resultsMap.s8_melee.count }
+          mk('corax_2'), mk('lions_2'), mk('corax_1'), mk('lions_1'),
+          ...josephineBlock,
+          DIV,
+          mk('g9_mounted'), mk('s9_mounted'), mk('g8_mounted'), mk('s8_mounted'),
+          DIV,
+          mk('g9_ranged'), mk('g9_melee'), mk('s9_ranged'), mk('s9_melee'),
+          DIV,
+          mk('g8_ranged'), mk('g8_melee'), mk('s8_ranged'), mk('s8_melee')
         ];
       }
 
       const factor = baseInput * 5510;
+
+      // Max M9 that can be stacked given the troop base; above this the stacking order may break
+      const maxM9 = factor / 1212000;
+      document.getElementById('monsterWarning').style.display =
+        (!isNaN(monsterBaseInput) && monsterBaseInput > maxM9) ? 'block' : 'none';
 
       const MONSTER_CASCADE_DEFS = [
         { key: 'm9_devastator_ii', tier: 'M9', hp: 55721250, factor: 53, typeIdx: 0,  isBase: true },
